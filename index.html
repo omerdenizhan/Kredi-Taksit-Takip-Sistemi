@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kredi & Taksit Takip Sistemi</title>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS KODLARI -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+
+    <!-- LOGIN SCREEN OVERLAY -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card">
+            <div class="login-brand-icon">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+            <h1 class="login-title"><span>Kredi & Taksit Takip Sistemi</span></h1>
+            <div class="login-form-frame">
+                <p class="login-subtitle"><span>Lütfen giriş bilgilerinizi giriniz</span></p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label" for="loginEmail">E-posta Adresi</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="E-posta adresiniz" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 24px;">
+                        <label class="form-label" for="loginPassword">Parola</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="font-size: 0.95rem; padding: 12px;">
+                        <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header id="mainHeader">
+        <div class="header-container">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div class="brand-text">
+                    <h1><span>Kredi & Taksit Takip Sistemi</span></h1>
+                </div>
+            </a>
+
+            <div class="header-actions">
+                <div class="autosave-badge">
+                    <span class="autosave-dot"></span>
+                    <span id="autosaveText">Oto Kayıt Aktif</span>
+                </div>
+
+                <button class="animated-theme-toggle" id="themeToggleBtn" title="Tema Değiştir">
+                    <div class="toggle-icon-slot sun-slot">
+                        <i class="fa-solid fa-sun"></i>
+                    </div>
+                    <div class="toggle-icon-slot moon-slot">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <div class="toggle-thumb">
+                        <i class="fa-solid fa-sun thumb-icon sun-icon"></i>
+                        <i class="fa-solid fa-moon thumb-icon moon-icon"></i>
+                    </div>
+                </button>
+
+                <button class="btn-logout" id="logoutBtn" title="Oturumu Kapat">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Layout Container -->
+    <div class="app-layout" id="appLayout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-header-title">Menü</span>
+                <button class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Menüyü Daralt/Genişlet">
+                    <i class="fa-solid fa-chevron-left" id="sidebarToggleIcon"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-menu">
+                <button class="sidebar-btn primary" id="openRecordModalBtn" title="Yeni Kayıt">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Yeni Kayıt</span>
+                </button>
+                <button class="sidebar-btn" id="openCategoryModalBtn" title="Kategoriler">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>Kategoriler</span>
+                </button>
+                <button class="sidebar-btn" id="openUserModalBtn" title="Kullanıcı Bilgileri">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Kullanıcı Bilgileri</span>
+                </button>
+                <button class="sidebar-btn" id="databaseOperationsBtn" title="Veritabanı İşlemleri">
+                    <i class="fa-solid fa-database"></i>
+                    <span>Veritabanı İşlemleri</span>
+                </button>
+            </div>
+            <div class="sidebar-resizer" id="sidebarResizer"></div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-container">
+            <a id="dashboardMonthTitle" class="dashboard-month-title">Aylık Durum</a>
+            <div class="dashboard-top-grid">
+                <!-- 6 ADET FLEXBOX KARTI (HER BİRİNE ÖZEL BELİRGİN RENKLİ GÖLGE) -->
+                <div class="stats-grid-container">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Toplam Borç</span>
+                            <div class="stat-icon-wrapper stat-icon-indigo">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statTotalDebt">0.00 ₺</div>
+                            <div class="stat-subtext">Tüm geri ödemeler</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Aylık Ödeme</span>
+                            <div class="stat-icon-wrapper stat-icon-amber">
+                                <i class="fa-solid fa-calendar-day"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statMonthlyPayment">0.00 ₺</div>
+                            <div class="stat-subtext">Bu ayki taksitler</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Kalan Anapara</span>
+                            <div class="stat-icon-wrapper stat-icon-cyan">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statRemainingPrincipal">0.00 ₺</div>
+                            <div class="stat-subtext">Net borç bakiyesi</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Bugün Kapatılırsa</span>
+                            <div class="stat-icon-wrapper stat-icon-purple">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statClosureToday">0.00 ₺</div>
+                            <div class="stat-subtext">Erken kapama tutarı</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Ödenen</span>
+                            <div class="stat-icon-wrapper stat-icon-emerald">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statTotalPaid">0.00 ₺</div>
+                            <div class="stat-subtext">Tamamlanan ödeme</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Kalan Toplam Borç</span>
+                            <div class="stat-icon-wrapper stat-icon-rose">
+                                <i class="fa-solid fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statRemainingDebt">0.00 ₺</div>
+                            <div class="stat-subtext">Vadesi gelen toplam</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KATEGORİ DAĞILIMI KARTI (ÖZEL GÖLGELİ) -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fa-solid fa-chart-pie" style="color: #d97706;"></i>
+                            Kategori Dağılımı
+                        </h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="debtChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-table-row">
+                <div class="table-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fa-solid fa-list-check" style="color: var(--accent-primary);"></i>
+                            Aktif Kredi ve Taksit Listesi
+                        </h2>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Kredi Adı</th>
+                                    <th>Kategorisi</th>
+                                    <th>Aylık Ödeme</th>
+                                    <th>Son Ödenen Ay</th>
+                                    <th>Son Ödenecek Ay</th>
+                                    <th>İlerleme Durumu</th>
+                                    <th>Kalan Anapara</th>
+                                    <th>Bugün Kapatılırsa</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recordsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODALLAR & DİĞER ARAYÜZ ELEMANLARI -->
+    <div class="modal-overlay" id="userModalOverlay">
+        <div class="modal-frame">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fa-solid fa-user-gear" style="color: var(--accent-primary);"></i>
+                    Kullanıcı Bilgileri
+                </h2>
+                <button class="modal-close-btn" title="Kapat" onclick="closeUserModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="userUpdateForm">
+                <div class="form-group">
+                    <label class="form-label" for="updateEmail">E-posta Adresi</label>
+                    <input type="email" id="updateEmail" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="updateCurrentPassword">Mevcut Parola</label>
+                    <input type="password" id="updateCurrentPassword" class="form-control" placeholder="Mevcut parolanızı girin" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="updateNewPassword">Yeni Parola (Opsiyonel)</label>
+                    <input type="password" id="updateNewPassword" class="form-control" placeholder="Yeni parola">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 8px;">
+                    <i class="fa-solid fa-floppy-disk"></i> Bilgileri Güncelle
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="recordModalOverlay">
+        <div class="modal-frame">
+            <div class="modal-header">
+                <h2 class="modal-title" id="recordModalTitle">
+                    <i class="fa-solid fa-pen-to-square" style="color: var(--accent-primary);"></i>
+                    Yeni Kayıt Ekle
+                </h2>
+                <button class="modal-close-btn" title="Kapat" onclick="closeRecordModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="loanForm">
+                <input type="hidden" id="editRecordId" value="">
+                
+                <div class="form-group">
+                    <label class="form-label" for="title">Kayıt / Borç Adı</label>
+                    <input type="text" id="title" class="form-control" placeholder="Örn: 180 Bin İhtiyaç Kredisi" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="categorySelect">Kategori</label>
+                    <select id="categorySelect" class="form-control" onchange="handleCategorySelectChange(this)" onclick="handleCategorySelectClick(this)"></select>
+                </div>
+
+                <!-- FAİZ HESAPLAMA GİRDİLERİ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="netAmount">Çekilen / Alınan Net Tutar (₺)</label>
+                        <input type="number" step="0.01" id="netAmount" class="form-control" placeholder="Örn: 180000" oninput="calculateLoanDetails()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="interestRate">Aylık Faiz Oranı (%)</label>
+                        <input type="number" step="0.01" id="interestRate" class="form-control" placeholder="Örn: 3.89" oninput="calculateLoanDetails()">
+                    </div>
+                </div>
+
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label class="form-label" for="bsmvRate">BSMV Oranı (%)</label>
+                        <input type="number" step="0.01" id="bsmvRate" class="form-control" value="15" placeholder="15" oninput="calculateLoanDetails()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="kkdfRate">KKDF / Stopaj (%)</label>
+                        <input type="number" step="0.01" id="kkdfRate" class="form-control" value="15" placeholder="15" oninput="calculateLoanDetails()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="installmentCount">Taksit Sayısı</label>
+                        <input type="number" id="installmentCount" class="form-control" min="1" max="120" value="12" required oninput="calculateLoanDetails()">
+                    </div>
+                </div>
+
+                <!-- HESAPLAMA ÖNİZLEME KART -->
+                <div class="calc-preview-card">
+                    <div class="calc-preview-row">
+                        <span style="color: var(--text-secondary); font-weight:700;">Vergi Dahil Brüt Faiz:</span>
+                        <strong id="previewGrossInterestRate" style="color: var(--text-primary); font-weight:800;">%0.00</strong>
+                    </div>
+                    <div class="calc-preview-row">
+                        <span style="color: var(--text-secondary); font-weight:700;">Hesaplanan Aylık Taksit:</span>
+                        <strong id="previewMonthlyPayment" style="color: var(--accent-primary); font-size: 1rem; font-weight:900;">0.00 ₺</strong>
+                    </div>
+                    <div class="calc-preview-row">
+                        <span style="color: var(--text-secondary); font-weight:700;">Geri Ödenecek Toplam Tutar:</span>
+                        <strong id="previewTotalAmount" style="color: var(--danger); font-weight:900;">0.00 ₺</strong>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="totalAmount">Toplam Geri Ödeme (₺)</label>
+                        <input type="number" step="0.01" id="totalAmount" class="form-control" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="paidInstallments">Ödenen Taksit</label>
+                        <input type="number" id="paidInstallments" class="form-control" min="0" value="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="startDate">Başlangıç Tarihi</label>
+                    <input type="date" id="startDate" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="notes">Notlar (Opsiyonel)</label>
+                    <textarea id="notes" class="form-control" rows="3" placeholder="Banka, hesap no, ek masraflar vb." style="resize: vertical;"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="recordSubmitBtn" style="margin-top: 8px;">
+                    <i class="fa-solid fa-plus"></i> Kaydı Oluştur ve Kaydet
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="categoryModalOverlay">
+        <div class="modal-frame">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fa-solid fa-tags" style="color: var(--accent-primary);"></i>
+                    Kategorileri Yönet
+                </h2>
+                <button class="modal-close-btn" title="Kapat" onclick="closeCategoryModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="category-add-box">
+                <input type="text" id="newCategoryInput" class="form-control" placeholder="Yeni Kategori Adı...">
+                <button type="button" class="btn btn-primary" style="width: auto; white-space: nowrap;" id="addCategoryBtn">
+                    <i class="fa-solid fa-plus"></i> Ekle
+                </button>
+            </div>
+
+            <label class="form-label" style="margin-bottom: 8px;">Tanımlı Kategoriler:</label>
+            <div class="category-list-container" id="categoryListContainer"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editCategoryModalOverlay">
+        <div class="modal-frame" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fa-solid fa-pen-to-square" style="color: var(--warning);"></i>
+                    Kategoriyi Düzenle
+                </h2>
+                <button class="modal-close-btn" title="Kapat" onclick="closeEditCategoryModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="editCategoryInput">Kategori Adı</label>
+                <input type="text" id="editCategoryInput" class="form-control">
+                <input type="hidden" id="editCategoryIndex">
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeEditCategoryModal()">İptal</button>
+                <button type="button" class="btn btn-primary" style="flex: 1;" onclick="saveCategoryEdit()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="databaseOperationsModalOverlay">
+        <div class="modal-frame database-operations-frame">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fa-solid fa-database" style="color: var(--accent-primary);"></i>
+                    Veritabanı İşlemleri
+                </h2>
+                <button class="modal-close-btn" title="Kapat" onclick="closeDatabaseOperationsModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="database-operation-actions">
+                <button type="button" class="btn btn-primary" id="backupDatabaseBtn">
+                    <i class="fa-solid fa-download"></i> Veritabanı Yedekle
+                </button>
+                <button type="button" class="btn btn-secondary" id="loadDatabaseBtn">
+                    <i class="fa-solid fa-upload"></i> Veritabanı Yükle
+                </button>
+                <button type="button" class="btn btn-danger" id="deleteDatabaseBtn">
+                    <i class="fa-solid fa-trash"></i> Veritabanını Sil
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="recordDetailsModalOverlay">
+        <div class="modal-frame record-details-frame">
+            <div class="modal-header">
+                <h2 class="modal-title" id="recordDetailsTitle">
+                    <i class="fa-solid fa-circle-info" style="color: var(--accent-primary);"></i>
+                    Kredi Ayrıntıları
+                </h2>
+                <button class="modal-close-btn" title="Kapat" onclick="closeRecordDetailsModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="record-details-content" id="recordDetailsContent"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="databaseUploadModalOverlay">
+        <div class="modal-frame database-upload-frame">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fa-solid fa-upload" style="color: var(--accent-primary);"></i>
+                    Veritabanı Yükle
+                </h2>
+                <button class="modal-close-btn" title="Kapat" onclick="closeDatabaseUploadModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="database-upload-dropzone" id="databaseUploadDropzone" tabindex="0" role="button">
+                <i class="fa-solid fa-file-arrow-up"></i>
+                <strong>Yedek dosyasını buraya sürükleyin</strong>
+                <span>veya dosyadan seçmek için tıklayın</span>
+            </div>
+            <div class="database-upload-warning">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Yükleme geri alınamaz. Mevcut veritabanının üzerine yazılır ve yükleme sonrasında ilk oturum başlangıcına dönülür.</span>
+            </div>
+            <input type="file" id="databaseFileInput" accept=".json,application/json" hidden>
+        </div>
+    </div>
+
+    <!-- ONAY VE UYARI PENCERESİ MODAL -->
+    <div class="modal-overlay" id="deleteConfirmModalOverlay">
+        <div class="modal-frame" style="max-width: 420px; text-align: center;">
+            <div id="confirmIconContainer" style="font-size: 3rem; color: var(--danger); margin-bottom: 12px;">
+                <i class="fa-solid fa-triangle-exclamation" id="confirmIcon"></i>
+            </div>
+            <h2 class="modal-title" id="deleteConfirmTitle" style="justify-content: center; margin-bottom: 8px;">İşlem Onayı</h2>
+            <p id="deleteConfirmMessage" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px; font-weight:600;">
+                Bu işlemi gerçekleştirmek istediğinize emin misiniz?
+            </p>
+            <div style="display: flex; gap: 12px;">
+                <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeDeleteConfirmModal()">İptal</button>
+                <button type="button" class="btn btn-danger" style="flex: 1;" id="confirmDeleteBtn">Evet, Onayla</button>
+            </div>
+        </div>
+    </div>
+
+    <footer id="mainFooter">
+        <a class="github-footer-link" href="https://www.github.com/omerdenizhan" target="_blank" rel="noopener noreferrer" title="GitHub profilini aç">
+            <i class="fa-brands fa-github"></i>
+        </a>
+        <div class="marquee-wrapper">
+            <div class="marquee-text">
+                © Copyright by Ömer Denizhan — Kredi ve Taksit Takip Sistemi — Lisanssızdır
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check" style="color: var(--success);" id="toastIcon"></i>
+        <span id="toastMessage">İşlem gerçekleştirildi.</span>
+    </div>
+
+    <div class="custom-context-menu" id="customContextMenu" role="menu">
+        <button type="button" data-context-action="record" role="menuitem">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Yeni Kayıt</span>
+        </button>
+        <button type="button" data-context-action="category" role="menuitem">
+            <i class="fa-solid fa-tags"></i>
+            <span>Kategoriler</span>
+        </button>
+        <button type="button" data-context-action="user" role="menuitem">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Kullanıcı Bilgileri</span>
+        </button>
+        <button type="button" data-context-action="database" role="menuitem">
+            <i class="fa-solid fa-database"></i>
+            <span>Veritabanı İşlemleri</span>
+        </button>
+    </div>
+
+    <!-- JAVASCRIPT KODLARI -->
+    <script src="script.js"></script>
+</body>
+</html>
