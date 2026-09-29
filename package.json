@@ -1,0 +1,18 @@
+{
+  "name": "Kredi ve Taksit Takip Sistemi",
+  "version": "1.0.8",
+  "description": "Kredi ve Taksit Takip Sistemi",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.18.2",
+    "undici": "^8.11.2"
+  }
+}
