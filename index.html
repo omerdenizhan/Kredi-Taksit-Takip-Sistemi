@@ -307,25 +307,10 @@ header {
     font-weight: 600;
 }
 
-.brand-text .dashboard-month-title {
-    font-size: var(--fs-sm);
-    line-height: 1.2;
-    letter-spacing: 0;
-}
-
 .header-actions {
     display: flex;
     align-items: center;
     gap: 12px;
-}
-
-.dashboard-month-title {
-    font-family: inherit;
-    font-size: var(--fs-xl);
-    font-weight: 800;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-    line-height: normal;
 }
 
 .app-layout {
@@ -344,8 +329,10 @@ header {
 }
 
 .nav-btn {
-    padding: 6px 12px;
-    border-radius: var(--radius-md);
+    box-sizing: border-box;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 50px;
     font-size: var(--fs-sm);
     font-weight: 700;
     border: 1px solid var(--accent-primary-hover);
@@ -360,7 +347,7 @@ header {
 }
 
 .nav-btn i {
-    font-size: var(--fs-lg);
+    font-size: var(--fs-sm);
 }
 
 .nav-btn:hover {
@@ -419,7 +406,9 @@ header {
     background: var(--danger-light);
     color: var(--danger);
     border: 1px solid var(--danger);
-    padding: 8px 12px;
+    box-sizing: border-box;
+    height: 34px;
+    padding: 0 18px;
     border-radius: 50px;
     font-size: var(--fs-sm);
     font-weight: 700;
@@ -437,8 +426,9 @@ header {
 
 .animated-theme-toggle {
     position: relative;
+    box-sizing: border-box;
     width: 68px;
-    height: 32px;
+    height: 34px;
     background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
     border: 2px solid var(--border-color);
     border-radius: 50px;
@@ -478,7 +468,7 @@ header {
 
 .toggle-thumb {
     position: absolute;
-    top: 1px;
+    top: 2px;
     left: 1px;
     width: 26px;
     height: 26px;
@@ -529,9 +519,11 @@ header {
 .autosave-badge {
     display: flex;
     align-items: center;
+    box-sizing: border-box;
+    height: 34px;
     gap: 6px;
     font-size: var(--fs-sm);
-    padding: 6px 12px;
+    padding: 0 12px;
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
     border-radius: 50px;
@@ -584,6 +576,7 @@ header {
     border-radius: var(--radius-lg);
     padding: 10px 16px;
     display: flex;
+    text-align: center;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
@@ -654,9 +647,11 @@ header {
 
 .stat-header {
     display: flex;
-    justify-content: space-between;
+    padding: 0 36px;
+    justify-content: center;
     align-items: center;
     margin-bottom: 4px;
+    position: relative;
 }
 
 .stat-title {
@@ -664,10 +659,14 @@ header {
     font-weight: 800;
     color: var(--text-secondary);
     text-transform: uppercase;
+    text-align: center;
     letter-spacing: 0.04em;
 }
 
 .stat-icon-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 30px;
     height: 30px;
     border-radius: var(--radius-md);
@@ -712,6 +711,7 @@ header {
 .stat-value {
     font-size: var(--fs-xl);
     font-weight: 800;
+    text-align: center;
     color: var(--text-primary);
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -719,6 +719,7 @@ header {
 
 .stat-subtext {
     font-size: var(--fs-sm);
+    text-align: center;
     color: var(--text-muted);
     margin-top: 2px;
     font-weight: 700;
@@ -974,7 +975,9 @@ body.modal-page-locked .modal-overlay.active,
 body.modal-page-locked .modal-overlay.active .modal-frame,
 body.modal-page-locked .modal-overlay.active .modal-frame *,
 body.modal-page-locked .github-profile-modal.active,
-body.modal-page-locked .github-profile-modal.active * {
+body.modal-page-locked .github-profile-modal.active *,
+body.modal-page-locked .icon-picker-panel,
+body.modal-page-locked .icon-picker-panel * {
     touch-action: auto;
     user-select: auto;
     -webkit-user-select: auto;
@@ -1048,20 +1051,6 @@ body.modal-page-locked .modal-overlay.active {
     padding: 0;
     overflow: hidden;
     min-width: 0;
-}
-
-.modal-body-scrollable {
-    overflow-y: auto;
-    flex: 1;
-    padding-right: 8px;
-}
-
-.modal-body-scrollable::-webkit-scrollbar {
-    width: 6px;
-}
-.modal-body-scrollable::-webkit-scrollbar-thumb {
-    background-color: var(--border-color);
-    border-radius: 4px;
 }
 
 .database-upload-frame {
@@ -1277,7 +1266,7 @@ body.modal-page-locked .modal-overlay.active {
 }
 
 .payment-plan-frame {
-    max-width: 420px;
+    max-width: 480px;
 }
 
 .payment-plan-content {
@@ -2003,17 +1992,6 @@ tr.payment-due:hover td {
     border-radius: 3px;
 }
 
-.action-btns {
-    display: flex;
-    gap: 4px;
-}
-
-.action-btns .icon-btn {
-    width: 28px;
-    height: 28px;
-    font-size: var(--fs-xs);
-}
-
 th:last-child,
 td:last-child {
     padding-left: 8px;
@@ -2051,32 +2029,6 @@ td:last-child {
     border-color: var(--danger);
 }
 
-.action-btns {
-    align-items: center;
-}
-
-.plan-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 13px;
-    border-radius: 50px;
-    font-size: var(--fs-xs);
-    font-weight: 800;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.plan-btn:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.08);
-}
-
-.plan-btn i {
-    font-size: var(--fs-xs);
-}
-
 .record-details-actions {
     flex-shrink: 0;
     display: flex;
@@ -2086,8 +2038,7 @@ td:last-child {
     border-top: 1px solid var(--border-color);
 }
 
-.record-details-actions .btn,
-.record-details-actions .plan-btn {
+.record-details-actions .btn {
     flex: 1;
     justify-content: center;
     padding: 11px;
@@ -2095,8 +2046,8 @@ td:last-child {
 
 footer {
     position: relative;
-    background: var(--bg-surface);
-    border-top: 1px solid var(--border-color);
+    background: transparent;
+    border-top: none;
     padding: 8px 0;
     overflow: hidden;
     width: 100%;
@@ -2119,6 +2070,7 @@ footer {
     font-size: var(--fs-xl);
     text-decoration: none;
     transition: var(--transition);
+    opacity: 0.75;
 }
 
 .github-footer-link:hover,
@@ -2126,6 +2078,12 @@ footer {
     color: var(--accent-primary);
     transform: translateY(-50%) scale(1.12);
     outline: none;
+    opacity: 1;
+}
+
+[data-theme="dark"] .github-footer-link:hover,
+[data-theme="dark"] .github-footer-link:focus-visible {
+    opacity: 1;
 }
 
 .marquee-wrapper {
@@ -2143,6 +2101,7 @@ footer {
     font-size: var(--fs-sm);
     font-weight: 800;
     color: var(--accent-primary);
+    opacity: 0.7;
     letter-spacing: 0.05em;
 }
 
@@ -2157,6 +2116,7 @@ footer {
 
 .marquee-wrapper:hover .marquee-text {
     animation-play-state: paused;
+    opacity: 0.8;
 }
 
 .toast {
@@ -2395,7 +2355,8 @@ footer {
 }
 
 .debt-type-chip {
-    padding: 8px 16px;
+    height: 34px;
+    padding: 0 16px;
     border-radius: 50px;
     border: 1px solid var(--border-color);
     background: var(--bg-primary);
@@ -2433,20 +2394,15 @@ footer {
     color: white;
 }
 
-.dashboard-title-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 7px;
-}
-
 .btn-hide-numbers {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 8px 16px;
-    min-width: 110px;
+    gap: 4px;
+    box-sizing: border-box;
+    height: 34px;
+    padding: 0 8px;
+    min-width: 130px;
     border-radius: 50px;
     border: 1px solid var(--border-color);
     background: var(--bg-card);
@@ -2920,24 +2876,6 @@ footer {
     transform: translateY(0) scale(1);
 }
 
-.github-profile-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.github-profile-header span {
-    font-size: var(--fs-md);
-    font-weight: 800;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
 .github-profile-body {
     min-height: 0;
     overflow-y: auto;
@@ -3023,12 +2961,6 @@ footer {
     background: var(--accent-primary);
     color: #fff;
     transform: translateY(-2px);
-}
-
-.github-social-icons a svg {
-    width: 1em;
-    height: 1em;
-    fill: currentColor;
 }
 
 .github-detail-row > span {
@@ -3153,9 +3085,20 @@ footer {
         </div>
     </header>
 
+    <div class="custom-context-menu" id="customContextMenu" role="menu">
+        <button type="button" data-context-action="record" role="menuitem">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Yeni Kayıt</span>
+        </button>
+        <button type="button" data-context-action="settings" role="menuitem">
+            <i class="fa-solid fa-gear"></i>
+            <span>Ayarlar</span>
+        </button>
+    </div>
+    
     <div class="app-layout" id="appLayout">
         <main class="main-container">
-            <div class="debt-type-overview-card">
+            <div class="debt-type-overview-card" style="margin-top: 10px;">
                 <div class="card-header" style="margin-bottom: 8; padding-bottom: 6px;">
                     <h2 class="card-title"><i class="fa-solid fa-layer-group" style="color: var(--accent-primary);"></i>Borç Tipleri</h2>
                 </div>
@@ -3353,10 +3296,10 @@ footer {
                 <div class="modal-tab-content" data-group="settings" data-tab="user">
                     <div class="debt-type-add-panel" style="display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0; padding: 16px;">
                         <div class="user-profile-summary">
-                            <div class="user-profile-avatar" id="userProfileHeaderAvatar">ÖD</div>
+                            <div class="user-profile-avatar" id="userProfileHeaderAvatar"></div>
                             <div class="user-profile-summary-info">
-                                <span class="user-profile-summary-name" id="userProfileHeaderName">Ömer Denizhan</span>
-                                <span class="user-profile-summary-email" id="userProfileHeaderEmail">omerd...@gmail.com</span>
+                                <span class="user-profile-summary-name" id="userProfileHeaderName">Admin</span>
+                                <span class="user-profile-summary-email" id="userProfileHeaderEmail">admin@admin.local</span>
                             </div>
                             <div class="user-profile-security-badge" title="Hesap güvenlik durumu">
                                 <i class="fa-solid fa-shield-halved"></i><span>Güvenli Hesap</span>
@@ -3390,46 +3333,6 @@ footer {
                                         <div class="form-group">
                                             <label class="form-label" for="updateEmail">E-Posta Adresi (Giriş için kullanılır)</label>
                                             <input type="email" id="updateEmail" class="form-control" placeholder="ornek@eposta.com" required>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group">
-                                                <label class="form-label" for="updatePhone">Telefon Numarası</label>
-                                                <input type="tel" id="updatePhone" class="form-control" placeholder="05XX XXX XX XX">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" for="updateJob">Meslek / Ünvan</label>
-                                                <input type="text" id="updateJob" class="form-control" placeholder="Örn: Yazılım Mühendisi">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group">
-                                                <label class="form-label" for="updateWhatsapp">WhatsApp</label>
-                                                <input type="text" id="updateWhatsapp" class="form-control" placeholder="Numara veya bağlantı">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" for="updateFacebook">Facebook</label>
-                                                <input type="text" id="updateFacebook" class="form-control" placeholder="Kullanıcı adı veya bağlantı">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group">
-                                                <label class="form-label" for="updateInstagram">Instagram</label>
-                                                <input type="text" id="updateInstagram" class="form-control" placeholder="@kullaniciadi">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" for="updateTwitter">X (Eski Twitter)</label>
-                                                <input type="text" id="updateTwitter" class="form-control" placeholder="@kullaniciadi">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group">
-                                                <label class="form-label" for="updateTelegram">Telegram</label>
-                                                <input type="text" id="updateTelegram" class="form-control" placeholder="@kullaniciadi">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" for="updateReddit">Reddit</label>
-                                                <input type="text" id="updateReddit" class="form-control" placeholder="u/kullaniciadi">
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer-fixed">
@@ -3526,7 +3429,7 @@ footer {
                             <div class="info-flex">
                                 <div class="info-flex-box" style="background: var(--bg-card);">
                                     <span>Veritabanı Dosyası</span>
-                                    <strong id="dbModalFileName">database.json</strong>
+                                    <strong id="dbModalFileName">database.db</strong>
                                 </div>
                                 <div class="info-flex-box" style="background: var(--bg-card);">
                                     <span>Dosya Boyutu</span>
@@ -3548,7 +3451,7 @@ footer {
                                     <button type="button" class="btn btn-primary" id="loadDatabaseBtn">
                                         <i class="fa-solid fa-upload"></i> Veritabanı Yükle / Geri Yükle
                                     </button>
-                                    <button type="button" class="btn btn-primary" id="verifyDatabaseBtn" onclick="verifyDatabaseIntegrity()">
+                                    <button type="button" class="btn btn-primary" onclick="verifyDatabaseIntegrity()">
                                         <i class="fa-solid fa-shield-check"></i> Veritabanı Bütünlüğünü Doğrula
                                     </button>
                                 </div>
@@ -3659,7 +3562,7 @@ footer {
         <div class="modal-frame" style="max-width: 700px;">
             <div class="modal-header">
                 <h2 class="modal-title">
-                    <i class="fa-solid fa-pen-to-square" style="color: var(--accent-primary);"></i>Yeni Kayıt Ekle
+                    <i class="fa-solid fa-pen-to-square" style="color: var(--accent-primary);"></i><span id="recordModalTitleText">Yeni Borç Ekle</span>
                 </h2>
                 <button class="modal-close-btn" title="Kapat" onclick="closeRecordModal()">
                     <i class="fa-solid fa-xmark"></i>
@@ -3883,7 +3786,7 @@ footer {
     <div class="github-profile-modal" id="githubProfileModal" role="dialog" aria-modal="true" aria-label="GitHub Profili">
         <div class="modal-header" style="margin-bottom: 0; padding: 10px 16px;">
             <h2 class="modal-title" style="font-size: var(--fs-lg);">
-                <i class="fa-brands fa-github" style="color: var(--accent-primary);"></i> GitHub Profili
+                <i class="fa-brands fa-github" style="color: var(--accent-primary);"></i>GitHub Profili
             </h2>
             <button class="modal-close-btn" title="Kapat" onclick="closeGithubProfileModal()">
                 <i class="fa-solid fa-xmark"></i>
@@ -3920,21 +3823,14 @@ footer {
         <span id="toastMessage">İşlem gerçekleştirildi.</span>
     </div>
 
-    <div class="custom-context-menu" id="customContextMenu" role="menu">
-        <button type="button" data-context-action="record" role="menuitem">
-            <i class="fa-solid fa-circle-plus"></i>
-            <span>Yeni Kayıt</span>
-        </button>
-        <button type="button" data-context-action="settings" role="menuitem">
-            <i class="fa-solid fa-gear"></i>
-            <span>Ayarlar</span>
-        </button>
-    </div>
-
     <script>
-const FIXED_FILE_NAME = 'database.json';
+const SERVER_DB_FILE_NAME = 'database.db';
+const LOCAL_DB_LABEL = 'Local Storage';
+const BACKUP_FILE_NAME = 'database-yedek.json';
+const DB_API_URL = '/api/database';
 const STORAGE_AUTH_KEY = 'finans_takip_is_logged_in';
 const STORAGE_LOCAL_DATA = 'finans_takip_encrypted_data';
+let dataSource = 'local';
 const THEME_KEY = 'finans_takip_theme';
 
 let appState = {
@@ -4112,11 +4008,6 @@ function updateDashboardMonthTitle() {
     const headerBrandMonth = document.getElementById('headerBrandMonth');
     if (headerBrandMonth) {
         headerBrandMonth.textContent = ` - ${summaryText}`;
-    }
-
-    const monthTitle = document.getElementById('dashboardMonthTitle');
-    if (monthTitle) {
-        monthTitle.innerHTML = `<i class="fa-solid fa-chart-pie" style="color: var(--accent-primary); margin-right: 6px;"></i>${headerTitle} - ${summaryText}`;
     }
 }
 
@@ -4356,9 +4247,7 @@ function createInitialAppState() {
             securityQuestion: 'İlk okulunuzun adı nedir?',
             securityAnswer: 'Okul',
             fullName: '',
-            username: '',
-            phone: '',
-            job: ''
+            username: ''
         },
         debtTypes: DEFAULT_DEBT_TYPES.map(t => ({ ...t })),
         records: [],
@@ -4397,6 +4286,16 @@ function normalizeAppState() {
 
     if (!Array.isArray(appState.records)) appState.records = [];
 
+    if ('iconLibrary' in appState) {
+        const lib = appState.iconLibrary;
+        if (!lib || typeof lib !== 'object' || !Array.isArray(lib.icons)) {
+            delete appState.iconLibrary;
+            migrated = true;
+        } else {
+            lib.icons = lib.icons.map(sanitizeIconName).filter(Boolean);
+        }
+    }
+
     const knownNames = new Set(appState.debtTypes.map(t => t.name));
     const ensureType = (name) => {
         if (knownNames.has(name)) return;
@@ -4430,27 +4329,36 @@ function normalizeAppState() {
         appState.user.username = '';
         migrated = true;
     }
+    if (appState.user) {
+        ['phone', 'job', 'whatsapp', 'facebook', 'instagram', 'twitter', 'telegram', 'reddit'].forEach(key => {
+            if (key in appState.user) {
+                delete appState.user[key];
+                migrated = true;
+            }
+        });
+    }
 
     return migrated;
 }
 
 async function scanAndInitializeDataFile() {
     try {
-        const response = await fetch(FIXED_FILE_NAME, { cache: 'no-store' });
+        const response = await fetch(DB_API_URL, { cache: 'no-store' });
         if (response.ok) {
             rawEncryptedPayload = await response.json();
             const decryptedData = await decryptData(rawEncryptedPayload);
             if (decryptedData) {
                 appState = decryptedData;
+                dataSource = 'database';
                 const migrated = normalizeAppState();
                 localStorage.setItem(STORAGE_LOCAL_DATA, JSON.stringify(rawEncryptedPayload));
-                showToast(`Sunucudaki '${FIXED_FILE_NAME}' dosyasından veriler alındı.`);
+                showToast(`Sunucudaki '${SERVER_DB_FILE_NAME}' veritabanından veriler alındı.`);
                 if (migrated) await autoSaveAllData();
                 return;
             }
         }
     } catch (err) {
-        console.log("Sunucuda dosya yok veya erişilemedi.");
+        console.log("Sunucu veritabanı yok veya erişilemedi, Local Storage kullanılacak.");
     }
 
     const localSaved = localStorage.getItem(STORAGE_LOCAL_DATA);
@@ -4460,6 +4368,7 @@ async function scanAndInitializeDataFile() {
             const decryptedData = await decryptData(rawEncryptedPayload);
             if (decryptedData) {
                 appState = decryptedData;
+                dataSource = 'local';
                 normalizeAppState();
                 appState.records.forEach(syncRecordLastPaymentMonth);
                 showToast("Önceki kaydedilmiş yerel veriler okundu.");
@@ -4470,6 +4379,7 @@ async function scanAndInitializeDataFile() {
     }
 
     appState = createInitialAppState();
+    dataSource = 'local';
     normalizeAppState();
     appState.records.forEach(syncRecordLastPaymentMonth);
     await autoSaveAllData();
@@ -4648,21 +4558,26 @@ function handleLogout() {
 }
 
 async function refreshDatabaseInfo() {
-    const totalRecords = appState.records.length;
-
     if (!rawEncryptedPayload) {
         rawEncryptedPayload = await encryptData(appState);
     }
 
     let sizeInBytes = null;
+    let storageName = LOCAL_DB_LABEL;
     try {
-        const response = await fetch(FIXED_FILE_NAME, { cache: 'no-store' });
-        if (response.ok) sizeInBytes = (await response.blob()).size;
+        const response = await fetch(DB_API_URL + '/info', { cache: 'no-store' });
+        if (response.ok) {
+            const info = await response.json();
+            if (info && Number.isFinite(info.size)) {
+                sizeInBytes = info.size;
+                storageName = info.fileName || SERVER_DB_FILE_NAME;
+            }
+        }
     } catch (err) {
         sizeInBytes = null;
     }
     if (sizeInBytes === null) {
-        sizeInBytes = new Blob([JSON.stringify(rawEncryptedPayload, null, 2)]).size;
+        sizeInBytes = new Blob([JSON.stringify(rawEncryptedPayload)]).size;
     }
 
     const fmt = (n) => n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -4673,7 +4588,7 @@ async function refreshDatabaseInfo() {
     const saltBits = ((rawEncryptedPayload.salt || []).length) * 8;
     const ivBits = ((rawEncryptedPayload.iv || []).length) * 8;
 
-    document.getElementById('dbModalFileName').innerText = FIXED_FILE_NAME;
+    document.getElementById('dbModalFileName').innerText = storageName;
     document.getElementById('dbModalSize').innerHTML = `${escapeHtml(sizeDisplay)}<small>${sizeInBytes.toLocaleString('tr-TR')} bayt</small>`;
     document.getElementById('dbEncryptionDetails').innerHTML = `
         <div><i class="fa-solid fa-lock"></i>AES-256-GCM</div>
@@ -4712,7 +4627,7 @@ function handleDatabaseBackup() {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(rawEncryptedPayload, null, 2));
         const downloadAnchor = document.createElement('a');
         downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", FIXED_FILE_NAME);
+        downloadAnchor.setAttribute("download", BACKUP_FILE_NAME);
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
@@ -4755,15 +4670,21 @@ async function applyDatabaseImport() {
 
     const { encryptedPayload, importedState } = pendingDatabaseImport;
     try {
-        const response = await fetch('/api/save', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(encryptedPayload)
-        });
-
-        if (!response.ok) throw new Error('Veritabanı kaydedilemedi.');
+        let savedToServer = false;
+        try {
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(encryptedPayload)
+            });
+            if (response.ok) savedToServer = true;
+            else if (response.status !== 404 && response.status !== 405) throw new Error('Veritabanı kaydedilemedi.');
+        } catch (err) {
+            if (!(err instanceof TypeError)) throw err;
+        }
 
         appState = importedState;
+        dataSource = savedToServer ? 'database' : 'local';
         normalizeAppState();
         rawEncryptedPayload = encryptedPayload;
         localStorage.setItem(STORAGE_LOCAL_DATA, JSON.stringify(encryptedPayload));
@@ -4801,18 +4722,12 @@ function requestDatabaseDeletionConfirmation(step) {
 async function deleteDatabase() {
     try {
         const initialState = createInitialAppState();
-        let response = await fetch('/api/database', { method: 'DELETE' });
-
-        if (!response.ok && (response.status === 404 || response.status === 405)) {
-            rawEncryptedPayload = await encryptData(initialState);
-            response = await fetch('/api/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(rawEncryptedPayload)
-            });
+        try {
+            const response = await fetch(DB_API_URL, { method: 'DELETE' });
+            if (response.status >= 500) throw new Error('Silinemedi.');
+        } catch (err) {
+            if (!(err instanceof TypeError)) throw err;
         }
-
-        if (!response.ok) throw new Error('Silinemedi.');
 
         appState = initialState;
         rawEncryptedPayload = null;
@@ -4825,46 +4740,6 @@ async function deleteDatabase() {
         showToast("Veritabanı silinemedi.", true);
     }
 }
-
-const PROFILE_EXTRA_FIELDS = [
-    { key: 'whatsapp', inputId: 'updateWhatsapp', label: 'WhatsApp' },
-    { key: 'facebook', inputId: 'updateFacebook', label: 'Facebook' },
-    { key: 'instagram', inputId: 'updateInstagram', label: 'Instagram' },
-    { key: 'twitter', inputId: 'updateTwitter', label: 'X (Eski Twitter)' },
-    { key: 'telegram', inputId: 'updateTelegram', label: 'Telegram' },
-    { key: 'reddit', inputId: 'updateReddit', label: 'Reddit' }
-];
-
-const X_ICON_SVG = '<svg viewBox="0 0 512 512" aria-hidden="true"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>';
-
-function buildSocialUrl(key, raw) {
-    const v = String(raw || '').trim();
-    if (!v) return '';
-    if (/^https?:\/\//i.test(v)) return v;
-    const handle = v.replace(/^@/, '').replace(/^\/+/, '');
-    const enc = encodeURIComponent;
-    switch (key) {
-        case 'whatsapp': {
-            const digits = v.replace(/\D/g, '');
-            return digits ? 'https://wa.me/' + digits : '';
-        }
-        case 'facebook': return 'https://www.facebook.com/' + enc(handle);
-        case 'instagram': return 'https://www.instagram.com/' + enc(handle);
-        case 'twitter': return 'https://x.com/' + enc(handle);
-        case 'telegram': return 'https://t.me/' + enc(handle);
-        case 'reddit': return 'https://www.reddit.com/user/' + enc(handle.replace(/^u\//i, ''));
-        default: return '';
-    }
-}
-
-const SOCIAL_ICON_MAP = {
-    whatsapp: '<i class="fa-brands fa-whatsapp"></i>',
-    facebook: '<i class="fa-brands fa-facebook-f"></i>',
-    instagram: '<i class="fa-brands fa-instagram"></i>',
-    twitter: X_ICON_SVG,
-    telegram: '<i class="fa-brands fa-telegram"></i>',
-    reddit: '<i class="fa-brands fa-reddit-alien"></i>'
-};
 
 const GITHUB_PROFILE_EMAILS = ['omer_denizhan@msn.com', 'omerdenizhan@gmail.com'];
 
@@ -4892,9 +4767,7 @@ function renderGithubProfileExtras() {
     if (box) {
         const rows = [
             ['Adı Soyadı', user.fullName],
-            ['Kullanıcı Adı', user.username],
-            ['Telefon Numarası', user.phone],
-            ['Meslek / Ünvan', user.job]
+            ['Kullanıcı Adı', user.username]
         ];
         box.textContent = '';
         rows.forEach(([label, value]) => {
@@ -4921,18 +4794,6 @@ function renderGithubProfileExtras() {
         gh.setAttribute('aria-label', 'GitHub Profilini Ziyaret Et');
         gh.innerHTML = '<i class="fa-brands fa-github"></i>';
         iconBox.appendChild(gh);
-        PROFILE_EXTRA_FIELDS.forEach(f => {
-            const url = buildSocialUrl(f.key, user[f.key]);
-            if (!url) return;
-            const a = document.createElement('a');
-            a.href = url;
-            a.target = '_blank';
-            a.rel = 'noopener noreferrer';
-            a.title = f.label;
-            a.setAttribute('aria-label', f.label);
-            a.innerHTML = SOCIAL_ICON_MAP[f.key] || '';
-            iconBox.appendChild(a);
-        });
         GITHUB_PROFILE_EMAILS.forEach(email => {
             const a = document.createElement('a');
             a.href = 'mailto:' + email;
@@ -4947,32 +4808,38 @@ function renderGithubProfileExtras() {
     }
 }
 
+function updateUserProfileHeader() {
+    const user = (appState && appState.user) || {};
+    let initials = '';
+    let name = 'Admin';
+    let email = 'admin@admin.local';
+
+    if (dataSource === 'database') {
+        name = user.fullName || user.username || 'Kullanıcı';
+        email = user.email || 'E-posta belirtilmemiş';
+        initials = (user.fullName || '')
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(part => part.charAt(0).toLocaleUpperCase('tr-TR'))
+            .join('');
+    }
+
+    document.getElementById('userProfileHeaderAvatar').textContent = initials;
+    document.getElementById('userProfileHeaderName').textContent = name;
+    document.getElementById('userProfileHeaderEmail').textContent = email;
+}
+
 function populateUserForms() {
     const user = appState.user || {};
     const prefs = getPreferences();
 
-    const fullName = user.fullName || 'Kullanıcı';
-    const email = user.email || 'E-posta belirtilmemiş';
-    const initials = fullName
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(part => part.charAt(0).toLocaleUpperCase('tr-TR'))
-        .join('') || 'K';
-
-    document.getElementById('userProfileHeaderAvatar').textContent = initials;
-    document.getElementById('userProfileHeaderName').textContent = fullName;
-    document.getElementById('userProfileHeaderEmail').textContent = email;
+    updateUserProfileHeader();
 
     document.getElementById('updateFullName').value = user.fullName || '';
     document.getElementById('updateUsername').value = user.username || '';
     document.getElementById('updateEmail').value = user.email || '';
-    document.getElementById('updatePhone').value = user.phone || '';
-    document.getElementById('updateJob').value = user.job || '';
-    PROFILE_EXTRA_FIELDS.forEach(f => {
-        document.getElementById(f.inputId).value = user[f.key] || '';
-    });
 
     document.getElementById('updateNewPassword').value = '';
     document.getElementById('updateNewPasswordConfirm').value = '';
@@ -5030,13 +4897,9 @@ async function handleUserProfileUpdate(e) {
     appState.user.fullName = document.getElementById('updateFullName').value.trim();
     appState.user.username = document.getElementById('updateUsername').value.trim();
     appState.user.email = email;
-    appState.user.phone = document.getElementById('updatePhone').value.trim();
-    appState.user.job = document.getElementById('updateJob').value.trim();
-    PROFILE_EXTRA_FIELDS.forEach(f => {
-        appState.user[f.key] = document.getElementById(f.inputId).value.trim();
-    });
 
     await autoSaveAllData();
+    updateUserProfileHeader();
     renderGithubProfileExtras();
     showToast("Profil bilgileri güncellendi.");
 }
@@ -5093,6 +4956,12 @@ async function handleUserSecurityUpdate(e) {
     showToast(newPass ? "Parola ve güvenlik ayarları güncellendi." : "Güvenlik ayarları güncellendi.");
 }
 
+function setRecordModalTitle(title) {
+    const el = document.getElementById('recordModalTitleText');
+    if (!el) return;
+    el.textContent = title ? `${title} Borç Bilgilerini Düzenle` : 'Yeni Borç Ekle';
+}
+
 function openRecordModal() {
     populateDebtTypeDropdown();
 
@@ -5136,6 +5005,7 @@ function openRecordModal() {
         setDefaultDate();
     }
 
+    setRecordModalTitle(document.getElementById('editRecordId').value ? document.getElementById('title').value : '');
     calculateLoanDetails();
     document.getElementById('recordModalOverlay').classList.add('active');
 }
@@ -5164,6 +5034,7 @@ function editRecordModal(id) {
     document.getElementById('paymentDay').value = rec.paymentDay || '';
     document.getElementById('notes').value = rec.notes || '';
 
+    setRecordModalTitle(rec.title);
     calculateLoanDetails();
     document.getElementById('recordModalOverlay').classList.add('active');
 }
@@ -5224,16 +5095,16 @@ function openRecordDetailsModal(id) {
         </div>
         <div class="record-details-actions">
             <button type="button" class="btn btn-primary" onclick="openPaymentPlanModal('${record.id}')" style="background-color: ${catObj.color}20; color: ${catObj.color}; border: 1px solid ${catObj.color}40;">
-                <i class="fa-solid fa-calendar-days"></i> Ödeme Planı
+                <i class="fa-solid fa-calendar-days"></i>Ödeme Planı
             </button>
             <button type="button" class="btn btn-secondary" onclick="editRecordModal('${record.id}')">
-                <i class="fa-solid fa-pen"></i> Düzenle
+                <i class="fa-solid fa-pen"></i>Düzenle
             </button>
             <button type="button" class="btn btn-danger" onclick="deleteRecord('${record.id}')">
-                <i class="fa-solid fa-trash"></i> Sil
+                <i class="fa-solid fa-trash"></i>Sil
             </button>
             <button type="button" class="btn btn-primary" onclick="openSingleRecordChart('${record.id}')">
-                <i class="fa-solid fa-chart-line"></i> Grafik Göster
+                <i class="fa-solid fa-chart-line"></i>Grafik Göster
             </button>
         </div>
     `;
@@ -5276,164 +5147,128 @@ function closeDeleteConfirmModal() {
     deleteCallback = null;
 }
 
-const ICON_PICKER_ICONS = `house|ev konut daire
-building|bina apartman
-building-columns|banka
-landmark|banka kurum
-car|araba taşıt otomobil
-truck|kamyon nakliye
-motorcycle|motosiklet
-bus|otobüs
-bicycle|bisiklet
-taxi|taksi
-train|tren
-plane|uçak
-ship|gemi
-gas-pump|benzin akaryakıt
-credit-card|kredi kartı kart
-wallet|cüzdan
-money-bill|para nakit
-money-bill-wave|para nakit
-coins|bozuk para
-sack-dollar|para çuval
-piggy-bank|kumbara birikim
-hand-holding-dollar|borç kredi ihtiyaç
-handshake|el sıkışma anlaşma elden
-file-contract|senet sözleşme
-file-invoice-dollar|fatura
-file-invoice|fatura
-receipt|makbuz fiş
-money-check-dollar|çek
-vault|kasa
-cash-register|kasa mağaza
-scale-balanced|denge adalet
-gavel|icra mahkeme
-percent|faiz yüzde oran
-chart-line|grafik artış
-chart-pie|grafik pasta
-chart-column|grafik sütun
-calculator|hesap makinesi
-cart-shopping|alışveriş sepet
-bag-shopping|alışveriş çanta
-basket-shopping|alışveriş sepet
-store|mağaza dükkan
-tag|etiket
-tags|etiket
-gift|hediye
-tv|televizyon
-laptop|bilgisayar dizüstü
-desktop|bilgisayar masaüstü
-mobile-screen|telefon
-phone|telefon
-sim-card|hat sim
-headphones|kulaklık
-camera|kamera fotoğraf
-gamepad|oyun
-print|yazıcı
-couch|koltuk mobilya
-bed|yatak
-bath|banyo
-kitchen-set|mutfak
-blender|mutfak blender
-fan|vantilatör
-lightbulb|elektrik ampul
-bolt|elektrik
-fire|doğalgaz ateş
-droplet|su
-wifi|internet
-plug|priz fiş
-wrench|tamir anahtar
-screwdriver-wrench|tamir tadilat
-hammer|çekiç
-toolbox|alet çantası
-paint-roller|boya tadilat
-shirt|giyim tişört
-graduation-cap|eğitim okul
-user-graduate|eğitim öğrenci
-book|kitap
-school|okul
-briefcase|iş çanta
-suitcase|bavul valiz
-suitcase-rolling|tatil valiz
-umbrella-beach|tatil plaj
-hotel|otel
-stethoscope|sağlık doktor
-heart-pulse|sağlık
-hospital|hastane
-pills|ilaç
-tooth|diş
-syringe|iğne
-baby|bebek
-child|çocuk
-people-group|aile grup
-user|kişi
-users|kişiler
-paw|evcil hayvan
-dog|köpek
-cat|kedi
-utensils|yemek restoran
-burger|yemek
-pizza-slice|yemek pizza
-mug-hot|kahve çay
-wine-glass|içki
-cake-candles|doğum günü pasta
-ring|yüzük düğün
-gem|mücevher elmas
-crown|taç
-star|yıldız
-heart|kalp
-flag|bayrak
-globe|dünya
-earth-americas|dünya
-passport|pasaport
-map-location-dot|konum adres
-umbrella|şemsiye sigorta
-shield-halved|sigorta kalkan
-lock|kilit
-key|anahtar
-clock|saat zaman
-calendar|takvim
-calendar-days|takvim
-hourglass-half|zaman süre
-bell|zil bildirim
-envelope|posta mektup
-box|paket kutu
-boxes-stacked|paket depo
-truck-fast|kargo
-industry|fabrika sanayi
-warehouse|depo
-tractor|traktör tarım
-seedling|fidan tarım
-leaf|yaprak
-tree|ağaç
-sun|güneş
-solar-panel|güneş enerjisi
-dumbbell|spor
-futbol|futbol spor
-music|müzik
-film|film sinema
-ticket|bilet
-mosque|cami
-kaaba|hac umre
-address-card|kimlik kart
-file-lines|belge dosya
-folder|klasör
-bookmark|yer imi
-thumbtack|raptiye
-rocket|roket
-robot|robot
-code|kod yazılım
-database|veritabanı
-server|sunucu
-cloud|bulut
-microchip|çip
-layer-group|katman
-circle-info|bilgi
-circle-question|soru
-ellipsis|diğer üç nokta`.split('\n').map(line => {
-    const [name, keywords] = line.split('|');
-    return { name, keywords: (keywords || '').toLocaleLowerCase('tr') };
-});
+function parseFontAwesomeCss(css) {
+    const glyphByName = {};
+    css.split('}').forEach(rule => {
+        const brace = rule.lastIndexOf('{');
+        if (brace === -1) return;
+        const content = rule.slice(brace + 1).match(/content:\s*["']\\([0-9a-fA-F]{4})["']/);
+        if (!content || parseInt(content[1], 16) < 0xE000) return;
+        const glyph = String.fromCharCode(parseInt(content[1], 16));
+        for (const m of rule.slice(0, brace).matchAll(/\.fa-([a-z0-9-]+)::?(?:before|after)/g)) {
+            glyphByName[m[1]] = glyph;
+        }
+    });
+    return glyphByName;
+}
+
+async function filterSolidIconNames(glyphByName) {
+    const all = Object.keys(glyphByName);
+    try {
+        await document.fonts.load('900 32px "Font Awesome 6 Free"');
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 40;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const alphaOf = (font, ch) => {
+            ctx.clearRect(0, 0, 40, 40);
+            ctx.font = font;
+            ctx.textBaseline = 'top';
+            ctx.fillText(ch, 4, 4);
+            return ctx.getImageData(0, 0, 40, 40).data;
+        };
+        const sameShape = (a, b) => {
+            for (let i = 3; i < a.length; i += 4) if (a[i] !== b[i]) return false;
+            return true;
+        };
+        const solid = all.filter(name => {
+            const ch = glyphByName[name];
+            return !sameShape(alphaOf('900 32px "Font Awesome 6 Free", sans-serif', ch), alphaOf('32px sans-serif', ch));
+        });
+        return solid.length ? solid : all;
+    } catch (err) {
+        return all;
+    }
+}
+
+let iconLibraryPromise = null;
+
+function getIconLibraryNames() {
+    const lib = appState && appState.iconLibrary;
+    return lib && Array.isArray(lib.icons) ? lib.icons : [];
+}
+
+function isIconLibraryReady() {
+    const lib = appState && appState.iconLibrary;
+    return !!(lib && lib.collection === 'free-collection' && lib.family === 'classic' && lib.style === 'solid' && getIconLibraryNames().length);
+}
+
+function getFontAwesomeLink() {
+    const link = document.querySelector('link[href*="font-awesome"]');
+    const match = link && link.href.match(/font-awesome\/(\d+\.\d+\.\d+)\//);
+    return { link, version: match ? match[1] : '6.4.0' };
+}
+
+async function fetchSolidGlyphsFromMetadata(version) {
+    const url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@${version}/metadata/icons.json`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const meta = await response.json();
+    const glyphByName = {};
+    Object.keys(meta).forEach(name => {
+        const info = meta[name] || {};
+        const freeStyles = Array.isArray(info.free) ? info.free : (info.styles || []);
+        if (!freeStyles.includes('solid') || !/^[0-9a-f]{4}$/i.test(info.unicode || '')) return;
+        const code = parseInt(info.unicode, 16);
+        if (code >= 0xE000) glyphByName[name] = String.fromCharCode(code);
+    });
+    return { url, glyphByName };
+}
+
+async function fetchIconLibrary() {
+    const { link, version } = getFontAwesomeLink();
+
+    try {
+        const { url, glyphByName } = await fetchSolidGlyphsFromMetadata(version);
+        const icons = await filterSolidIconNames(glyphByName);
+        if (icons.length) return { version, source: url, icons };
+    } catch (err) {
+        console.warn('Simge metadatası alınamadı, CSS dosyası deneniyor:', err);
+    }
+
+    if (!link) throw new Error('Font Awesome bağlantısı bulunamadı.');
+    const response = await fetch(link.href);
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const icons = await filterSolidIconNames(parseFontAwesomeCss(await response.text()));
+    if (!icons.length) throw new Error('Simge bulunamadı.');
+    return { version, source: link.href, icons };
+}
+
+function loadIconLibrary(force = false) {
+    if (!force && isIconLibraryReady()) return Promise.resolve(true);
+    if (iconLibraryPromise) return iconLibraryPromise;
+
+    iconLibraryPromise = (async () => {
+        try {
+            const result = await fetchIconLibrary();
+            appState.iconLibrary = {
+                collection: 'free-collection',
+                family: 'classic',
+                style: 'solid',
+                version: result.version,
+                source: result.source,
+                fetchedAt: new Date().toISOString(),
+                icons: result.icons.sort()
+            };
+            await autoSaveAllData();
+            return true;
+        } catch (err) {
+            console.warn('Simge listesi alınamadı:', err);
+            return false;
+        }
+    })().finally(() => { iconLibraryPromise = null; });
+
+    return iconLibraryPromise;
+}
 
 function sanitizeIconName(name) {
     const value = String(name || '').trim().replace(/^fa-/, '');
@@ -5449,6 +5284,7 @@ function debtTypeIconHtml(cat) {
 
 let iconPickerPanel = null;
 let iconPickerActive = null;
+let iconPickerOpenedAt = 0;
 
 function getIconPickerParts(picker) {
     return {
@@ -5489,24 +5325,33 @@ function getIconPickerValue(pickerId) {
 
 function renderIconPickerGrid() {
     const grid = iconPickerPanel.querySelector('.icon-picker-grid');
-    const query = iconPickerPanel.querySelector('.icon-picker-search').value.trim().toLocaleLowerCase('tr');
+    const names = getIconLibraryNames();
+
+    if (!names.length) {
+        grid.innerHTML = '<div class="icon-picker-empty">Simgeler yükleniyor...</div>';
+        return;
+    }
+
+    const query = iconPickerPanel.querySelector('.icon-picker-search').value.trim().toLocaleLowerCase('en').replace(/\s+/g, '-');
     const current = iconPickerActive ? sanitizeIconName(getIconPickerParts(iconPickerActive).hidden.value) : '';
-    const matches = ICON_PICKER_ICONS.filter(i => !query || i.name.includes(query) || i.keywords.includes(query));
+    const matches = names.filter(name => !query || name.includes(query));
 
     grid.innerHTML = '';
     if (!matches.length) {
         grid.innerHTML = '<div class="icon-picker-empty">Eşleşen simge bulunamadı.</div>';
         return;
     }
-    matches.forEach(i => {
+    const fragment = document.createDocumentFragment();
+    matches.forEach(name => {
         const cell = document.createElement('button');
         cell.type = 'button';
-        cell.className = 'icon-picker-cell' + (i.name === current ? ' selected' : '');
-        cell.title = i.name;
-        cell.innerHTML = `<i class="fa-solid fa-${i.name}"></i>`;
-        cell.addEventListener('click', () => chooseIconPickerIcon(i.name));
-        grid.appendChild(cell);
+        cell.className = 'icon-picker-cell' + (name === current ? ' selected' : '');
+        cell.title = name;
+        cell.innerHTML = `<i class="fa-solid fa-${name}"></i>`;
+        cell.addEventListener('click', () => chooseIconPickerIcon(name));
+        fragment.appendChild(cell);
     });
+    grid.appendChild(fragment);
 }
 
 function chooseIconPickerIcon(name) {
@@ -5533,8 +5378,22 @@ function openIconPicker(picker) {
     iconPickerPanel.querySelector('.icon-picker-search').value = '';
     renderIconPickerGrid();
     iconPickerPanel.classList.add('open');
+    iconPickerOpenedAt = Date.now();
     positionIconPickerPanel();
-    iconPickerPanel.querySelector('.icon-picker-search').focus();
+    iconPickerPanel.querySelector('.icon-picker-search').focus({ preventScroll: true });
+
+    if (!isIconLibraryReady()) {
+        loadIconLibrary().then(ok => {
+            if (iconPickerActive !== picker) return;
+            if (ok) {
+                renderIconPickerGrid();
+            } else if (!getIconLibraryNames().length) {
+                iconPickerPanel.querySelector('.icon-picker-grid').innerHTML =
+                    '<div class="icon-picker-empty">Simge listesi alınamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.</div>';
+            }
+            positionIconPickerPanel();
+        });
+    }
 }
 
 function closeIconPicker() {
@@ -5548,11 +5407,12 @@ function initIconPickers() {
         iconPickerPanel = document.createElement('div');
         iconPickerPanel.className = 'icon-picker-panel';
         iconPickerPanel.innerHTML = `
-            <input type="text" class="form-control icon-picker-search" placeholder="Simge ara (ev, araba, banka...)" autocomplete="off">
+            <input type="text" class="form-control icon-picker-search" placeholder="Simge ara (house, car, bank...)" autocomplete="off">
             <div class="icon-picker-grid"></div>
             <button type="button" class="icon-picker-clear"><i class="fa-solid fa-xmark"></i> Simgeyi Kaldır</button>
         `;
         document.body.appendChild(iconPickerPanel);
+        iconPickerPanel.addEventListener('click', (e) => e.stopPropagation());
 
         iconPickerPanel.querySelector('.icon-picker-search').addEventListener('input', renderIconPickerGrid);
         iconPickerPanel.querySelector('.icon-picker-clear').addEventListener('click', () => chooseIconPickerIcon(''));
@@ -5568,9 +5428,15 @@ function initIconPickers() {
                 closeIconPicker();
             }
         }, true);
-        window.addEventListener('resize', closeIconPicker);
+        window.addEventListener('resize', () => {
+            if (iconPickerActive) positionIconPickerPanel();
+        });
         window.addEventListener('scroll', (e) => {
-            if (iconPickerActive && !iconPickerPanel.contains(e.target)) closeIconPicker();
+            if (!iconPickerActive || iconPickerPanel.contains(e.target)) return;
+            if (Date.now() - iconPickerOpenedAt < 400) return;
+            const rect = getIconPickerParts(iconPickerActive).button.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > window.innerHeight) closeIconPicker();
+            else positionIconPickerPanel();
         }, true);
     }
 
@@ -6433,7 +6299,7 @@ function initChart() {
     Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
     const ctx = document.getElementById('debtChart').getContext('2d');
     chartInstance = new Chart(ctx, {
-        type: 'doughnut',
+        type: 'pie',
         data: {
             labels: [],
             datasets: [{
@@ -6457,7 +6323,7 @@ function initChart() {
                     display: false
                 }
             },
-            cutout: '70%'
+            cutout: '0%'
         }
     });
 }
@@ -6539,7 +6405,7 @@ function openTypeChartModal(typeName) {
     currentTypeRecords = appState.records.filter(r => r.debtType === typeName);
     if (!currentTypeRecords.length) return;
 
-    document.getElementById('typeChartTitle').textContent = `${typeName} — Teknik Grafik`;
+    document.getElementById('typeChartTitle').textContent = `${typeName} Teknik Grafikleri`;
     document.getElementById('typeChartModalOverlay').classList.add('active');
 
     const select = document.getElementById('typeChartRecordSelect');
