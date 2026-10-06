@@ -113,4 +113,4 @@ app.delete('/api/database', (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`Sunucu çalışıyor: http://localhost:${PORT} (veritabanı: database.db)`));
+app.listen(PORT, () => console.log(`Sunucu çalışıyor: (Veritabanı: database.db) http://localhost:${PORT}`));
