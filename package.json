@@ -1,0 +1,22 @@
+{
+  "name": "Kredi & Taksit Takip Sistemi",
+  "version": "1.0.8",
+  "description": "Kredi & Taksit Takip Sistemi",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.18.2",
+    "undici": "^8.11.2"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}
