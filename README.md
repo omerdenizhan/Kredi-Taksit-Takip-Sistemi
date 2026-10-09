@@ -9,8 +9,6 @@
 ![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-1.0.8-6366f1)
 ![Lisans](https://img.shields.io/badge/lisans-Unlicense-blue)
 
-</div>
-
 ## 🔎 Genel Bakış
 
 Bu proje, bireysel kredi ve taksitli borçları takip etmek için geliştirilmiş **tek sayfalık (`index.html`) bir web uygulamasıdır**. Derleme adımı, framework veya veritabanı sunucusu gerektirmez.
@@ -25,8 +23,6 @@ Bu proje, bireysel kredi ve taksitli borçları takip etmek için geliştirilmi�
 | **Uygun senaryo** | Kalıcı, tarayıcıdan bağımsız kullanım | Hızlı deneme, kurulumsuz kullanım |
 
 Mod, uygulama açılırken **otomatik** belirlenir; üst çubuktaki ve giriş ekranındaki rozet `Sunucu: Node Aktif` veya `Sunucu: Lokal Depolama` olarak gösterir.
-
----
 
 ## ✨ Özellikler
 
@@ -69,8 +65,6 @@ Mod, uygulama açılırken **otomatik** belirlenir; üst çubuktaki ve giriş ek
 - Giriş ekranı, çıkış, **güvenlik sorusuyla parola sıfırlama**.
 - Profil: ad soyad, kullanıcı adı, e-posta, parola, güvenlik sorusu/cevabı.
 - Veriler tarayıcıda **AES-256-GCM** ile şifrelenerek saklanır.
-
----
 
 ## 🚀 Hızlı Başlangıç
 
@@ -125,8 +119,6 @@ set PORT=8080 && npm start
 
 > ⚠️ Girişten hemen sonra **Ayarlar → Kullanıcı Profili ve Hesap Merkezi** bölümünden e-posta, parola ve güvenlik sorusunu değiştirin.
 
----
-
 ## 💾 Çalışma Modları ve Depolama
 
 ```
@@ -153,8 +145,6 @@ Her değişiklikte veri otomatik olarak yeniden şifrelenip kaydedilir (**otomat
 - Sunucu modunda veritabanı boşsa ve aynı tarayıcıda yerel veri varsa, ilk kayıtta bu veri `database.db` dosyasına yazılır.
 - Modlar/cihazlar arası taşıma için **Veritabanı Yedekle → Yükle** kullanın.
 - **Eski `database.json` göçü:** `database.db` yoksa/boşsa ve klasörde `database.json` bulunuyorsa sunucu, şifreli veriyi ilk başlatmada **otomatik** `database.db`'ye aktarır. `database.json` silinmez.
-
----
 
 ## 🧭 Kullanım Kılavuzu
 
@@ -201,8 +191,6 @@ Kayıt ayrıntılarında ve ana ekrandaki **"Bugün Kapatılırsa"** kartında, 
 ### 5. Gizlilik modu
 
 Üst çubuktaki göz simgesi tüm tutarları maskeler. Tercih tarayıcıda hatırlanır.
-
----
 
 ## 🧮 Finansal Hesaplama Mantığı
 
@@ -252,8 +240,6 @@ Faiz/anapara bilgisi yoksa: `kalan = toplam − (toplam/n × ödenen)` basit yö
 
 > ⚠️ Sonuçlar **tahmindir**. Bankaların gün sayımı, faiz yuvarlaması, sigorta ve masraf kalemleri farklı olabilir; bağlayıcı rakam için banka dökümünüzü esas alın. Bu yazılım finansal tavsiye değildir.
 
----
-
 ## 🚦 Uyarı ve Bildirim Sistemi
 
 Uyarılar **Ayarlar → Tercihler**'deki eşiklere göre hesaplanır (`highlightDue` açıksa).
@@ -269,8 +255,6 @@ Uyarılar **Ayarlar → Tercihler**'deki eşiklere göre hesaplanır (`highlight
 - Ödeme günü ayın son gününden büyükse (örn. 31) o ayın son gününe çekilir.
 - Ödeme günü girilmemişse **başlangıç tarihinin günü** kullanılır.
 - Bildirim merkezi, kayıtları önem sırasına, ardından ödeme gününe göre sıralar.
-
----
 
 ## ⚙️ Ayarlar Rehberi
 
@@ -305,8 +289,6 @@ Avatar, ad ve e-posta özeti; altında:
 ### 4) Veritabanı İşlemleri
 Veritabanı dosyası adı (`database.db` veya `Local Storage`), dosya boyutu, şifreleme algoritması bilgisi; **yedekle**, **yükle/geri yükle**, **bütünlük doğrula**, **sıfırla ve sil**.
 
----
-
 ## 📦 Yedekleme ve Geri Yükleme
 
 | İşlem | Nasıl |
@@ -318,8 +300,6 @@ Veritabanı dosyası adı (`database.db` veya `Local Storage`), dosya boyutu, ş
 | **Sıfırla** | Sunucu modunda `app_data` kaydını, yerel modda Local Storage verisini siler ve temiz başlangıç verisi oluşturur. **Geri alınamaz** — önce yedek alın. |
 
 > 🔁 **Mod değiştirirken:** yerel moddan sunucu moduna geçecekseniz önce yedek alıp yeni modda *Yükle* ile içeri aktarın.
-
----
 
 ## 🔐 Güvenlik ve Gizlilik
 
@@ -341,8 +321,6 @@ Bu uygulama **kişisel / yerel kullanım** içindir. Aşağıdaki noktaları bil
 
 **Öneriler:** ilk girişte varsayılan parolayı değiştirin · düzenli yedek alın · `database.db` ve yedek dosyalarını sürüm kontrolüne eklemeyin · gerçek bir çok kullanıcılı/uzak kullanım gerekiyorsa parola kaynaklı anahtar türetme ve sunucu tarafı kimlik doğrulama ekleyin.
 
----
-
 ## 🔌 Sunucu API'si
 
 Taban adres: `http://localhost:3000` · JSON gövde limiti: **10 MB**
@@ -363,8 +341,6 @@ curl http://localhost:3000/api/database/info
 ```
 
 Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `x-powered-by: Express` başlığıyla sunucu modunu algılar.
-
----
 
 ## 🏗️ Mimari ve Proje Yapısı
 
@@ -414,8 +390,6 @@ Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `
 | Görsel ayarlar | `applyVisualSettings`, `renderAmbientBubbles`, `launchFireworks`, `applyAccentColor` |
 
 `normalizeAppState()` eski veri biçimlerini (ör. `categories → debtTypes`) otomatik taşır ve ayar değerlerini geçerli aralıklara sabitler; böylece eski yedekler yeni sürümlerde de açılır.
-
----
 
 ## 🗄️ Veri Modeli
 
@@ -474,8 +448,6 @@ Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `
 | `finans_takip_theme` | Tema tercihi |
 | `finans_takip_hide_numbers` | Rakam gizleme tercihi |
 
----
-
 ## 🌐 Harici Bağımlılıklar ve Ağ İstekleri
 
 Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsanız** ilgili parça devre dışı kalır, temel kredi takibi çalışmaya devam eder.
@@ -490,8 +462,6 @@ Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsa
 | `avatars.githubusercontent.com` | Geliştirici profil kartı avatarı | Yedek simge gösterilir |
 
 > 🔒 **Gizlilik notu:** Hava durumu özelliği tarayıcı konum iznini kullanabilir; izin verilmezse yaklaşık konum için IP tabanlı servis (`ipwho.is`) denenir. Kredi verileriniz bu isteklere **dahil edilmez**. İsterseniz konum iznini reddedebilirsiniz.
-
----
 
 ## 🩺 Sorun Giderme
 
@@ -511,8 +481,6 @@ Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsa
 
 **Sıfırdan başlamak için:** sunucuyu durdurun → `database.db*` dosyalarını silin → tarayıcıda site verilerini (Local Storage) temizleyin → yeniden başlatın.
 
----
-
 ## 🧑‍💻 Geliştirici Notları
 
 - **Derleme yok:** `index.html` düzenlenip tarayıcıyı yenilemek yeterlidir. Statik dosyalar önbelleksiz değil; değişiklik görünmezse sert yenileme (`Ctrl+F5`) yapın.
@@ -531,13 +499,9 @@ Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsa
 ### Katkı
 Hata bildirimi ve öneriler için issue açabilir, değişiklikler için pull request gönderebilirsiniz. Büyük değişikliklerde önce bir issue ile tartışmanız önerilir. Bu araç yalnızca takip ve bilgilendirme amaçlıdır; finansal tavsiye değildir.
 
----
-
 ## 📄 Lisans
 
 Bu proje [Unlicense](https://unlicense.org/) ile kamu malı olarak sunulmuştur; dilediğiniz gibi kullanabilir, değiştirebilir ve dağıtabilirsiniz. Ayrıntılar için [`LICENSE`](LICENSE) dosyasına bakın.
-
----
 
 ## 🕰️ Son Güncelleme
 09 Ekim 2026
