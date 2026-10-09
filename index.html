@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <!--**************************************************************************************************************************-->
 <!-- Start of CSS -->
@@ -71,8 +72,13 @@
     --danger-light: rgba(248, 113, 113, 0.2);
 }
 
+/* Tüm Font Awesome simgeleri bulunduğu metinden 1px büyük (site logosu görsel olduğundan etkilenmez) */
+.fa-solid, .fa-regular, .fa-brands, .fas, .far, .fab {
+    font-size: calc(1em + 1px);
+}
+
 html {
-    font-size: 15px;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -208,7 +214,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
-    font-size: var(--fs-md);
+    font-size: calc(var(--fs-md) + 1px);
     pointer-events: none;
 }
 
@@ -400,7 +406,7 @@ header {
 }
 
 .notification-trigger i {
-    font-size: 17px;
+    font-size: 18px;
 }
 
 .notification-trigger.has-alerts i {
@@ -1293,7 +1299,7 @@ body.modal-page-locked .modal-overlay.active {
 
 .database-upload-dropzone i {
     color: var(--accent-primary);
-    font-size: var(--fs-2xl);
+    font-size: calc(var(--fs-2xl) + 1px);
 }
 
 .database-upload-dropzone strong {
@@ -1344,7 +1350,7 @@ body.modal-page-locked .modal-overlay.active {
 }
 
 .record-details-frame {
-    max-width: 600px;
+    max-width: 480px;
     max-height: min(90vh, 780px);
 }
 
@@ -1750,7 +1756,7 @@ body.modal-page-locked .modal-overlay.active {
 }
 
 .icon-picker-caret {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-muted);
 }
 
@@ -2330,7 +2336,7 @@ footer {
 }
 
 .empty-state i {
-    font-size: 2.5rem;
+    font-size: calc(2.5rem + 1px);
     margin-bottom: 12px;
     opacity: 0.5;
 }
@@ -2443,7 +2449,7 @@ footer {
 
 .modal-tab-btn i {
     flex: 0 0 auto;
-    font-size: var(--fs-sm);
+    font-size: calc(var(--fs-sm) + 1px);
     opacity: 0.9;
 }
 
@@ -2488,7 +2494,7 @@ body[data-theme="dark"] .visual-subtabs .modal-tab-btn.active:hover {
         gap: 4px;
     }
     .modal-tab-btn i {
-        font-size: var(--fs-xs);
+        font-size: calc(var(--fs-xs) + 1px);
     }
     .settings-tabs .modal-tab-btn {
         flex-direction: column;
@@ -2677,7 +2683,7 @@ body[data-theme="dark"] .visual-subtabs .modal-tab-btn.active:hover {
     color: var(--success);
     width: 16px;
     text-align: center;
-    font-size: var(--fs-xs);
+    font-size: calc(var(--fs-xs) + 1px);
     margin-right: 4px;
 }
 
@@ -3610,7 +3616,7 @@ svg {
 
 @media (max-width: 600px) {
     html {
-        font-size: 14px;
+        font-size: 15px;
     }
     body {
         overflow: hidden;
@@ -4591,7 +4597,8 @@ body.fx-no-anim .plan-table tbody tr {
     display: grid;
     grid-template-columns: repeat(var(--cards-per-row,4),minmax(0,1fr));
     gap: 12px;
-    padding: 2px
+    padding: 2px;
+    grid-auto-rows: 1fr
 }
 
 .record-card {
@@ -4886,7 +4893,7 @@ tr.payment-due-blink:hover td {
 }
 
 .main-list-view-select {
-    width: 170px;
+    width: 20px;
     height: 34px;
     padding: 0 12px;
     margin-left: auto;
@@ -4994,7 +5001,7 @@ tr.payment-due-blink:hover td {
     border-radius: var(--radius-sm);
     background: var(--accent-light);
     color: var(--accent-primary);
-    font-size: var(--fs-md)
+    font-size: calc(var(--fs-md) + 1px)
 }
 
 .side-menu-item:hover,.side-menu-item:focus-visible {
@@ -5132,30 +5139,45 @@ tr.payment-due-blink:hover td {
     text-align: right
 }
 
-.record-card-alerts .payment-due-indicator {
-    margin-top: 0;
-    font-size: .68rem
+.record-card-alerts {
+    /* Uyarı metni Borç Tipi'nin hemen altında; uyarı olsun olmasın 1 satırlık sabit alan (çizgi hep aynı yerde) */
+    height: calc(.68rem * 1.3 + 3px);
+    overflow: hidden;
+    margin-top: -3px;
+    display: flex;
+    gap: 8px;
+    line-height: 1.3
 }
 
+.record-card-alerts .payment-due-indicator {
+    margin-top: 0;
+    font-size: .68rem;
+    line-height: 1.3;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+/* Kart bilgi alanı: çizgi altında 3 sütunlu ızgara, etiket üstte, değer altta */
 .record-card-info {
-    gap: 4px 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px 8px;
     padding-top: 5px
 }
 
-.record-card-cell-wide {
-    grid-column: 1/-1;
-    flex-direction: row;
+.record-card-cell {
     align-items: center;
-    justify-content: space-between;
-    gap: 8px
+    text-align: center;
+    gap: 1px
 }
 
-.record-card-cell-wide strong {
-    text-align: right
+.record-card-cell>strong {
+    line-height: 1.25
 }
 
 .record-card-cell:last-child:nth-child(odd) {
-    grid-column: 1/-1
+    grid-column: auto
 }
 
 .record-card-progress {
@@ -5978,7 +6000,7 @@ tr.payment-due-blink:hover td {
     }
     .table-card > .card-header .main-list-view-select {
         flex: 0 0 auto;
-        width: 120px;
+        width: 245px;
         height: 32px;
         padding: 0 8px;
         font-size: .72rem;
@@ -6059,6 +6081,87 @@ tr.payment-due-blink:hover td {
     width: 100%;
 }
 
+</style>
+<style id="v8-additions">
+.list-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.list-controls .main-list-view-select {
+    margin-left: 0;
+    width: 245px;
+}
+
+.list-controls #mainListView {
+    width: 140px;
+}
+
+.list-controls #mainCardsPerRow {
+    width: 60px;
+}
+
+.btn-pdf-download {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #fff;
+}
+
+.btn-pdf-download:hover {
+    background: var(--accent-primary-hover);
+    border-color: var(--accent-primary-hover);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.35);
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+    .table-card > .card-header {
+        flex-wrap: wrap;
+    }
+    .table-card > .card-header .card-title {
+        flex: 1 1 100%;
+    }
+    .table-card > .card-header .list-controls {
+        width: 100%;
+        margin-left: 0;
+        justify-content: flex-start;
+    }
+    .table-card > .card-header .list-controls .main-list-view-select {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+    }
+    .table-card > .card-header .list-controls #mainCardsPerRow {
+        flex: 0 0 64px;
+    }
+}
+.records-table th.sortable-th {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.records-table th.sortable-th:hover {
+    color: var(--accent-primary);
+}
+
+.records-table th.sortable-th .sort-ind {
+    margin-left: 5px;
+    font-size: 0.7rem;
+    opacity: 0.35;
+}
+
+.records-table th.sortable-th.sorted {
+    color: var(--accent-primary);
+}
+
+.records-table th.sortable-th.sorted .sort-ind {
+    opacity: 1;
+}
 </style>
 </head>
 
@@ -6162,6 +6265,10 @@ tr.payment-due-blink:hover td {
                 </div>
             </a>
             <div class="header-actions" style="display: flex; align-items: center; gap: 6px; margin-left: auto; flex-wrap: wrap; justify-content: flex-end;">
+                <button type="button" class="btn-hide-numbers btn-pdf-download" id="downloadPdfBtn" title="Aktif Kredi &amp; Borç Listesini PDF olarak indir">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>PDF İndir</span>
+                </button>
                 <button type="button" class="btn-hide-numbers" id="toggleNumbersBtn" title="Para birimi olan rakamları gizle/göster">
                     <i class="fa-solid fa-eye-slash" id="toggleNumbersIcon"></i>
                     <span id="toggleNumbersText">Rakamları Gizle</span>
@@ -6336,10 +6443,26 @@ tr.payment-due-blink:hover td {
                     <div class="table-card">
                         <div class="card-header">
                             <h2 class="card-title"><i class="fa-solid fa-list-check" style="color: var(--accent-primary);"></i>Aktif Kredi & Taksit Listesi</h2>
-                            <select id="mainListView" class="form-control main-list-view-select" title="Görünüm seçiniz" aria-label="Liste görünümü seçiniz">
-                                <option value="list">Liste Görünümü</option>
-                                <option value="card">Kart Görünümü</option>
-                            </select>
+                            <div class="list-controls">
+                                <select id="mainSortBy" class="form-control main-list-view-select" title="Sıralama seçiniz" aria-label="Liste sıralamasını seçiniz">
+                                    <option value="title">Borç Adına Göre</option>
+                                    <option value="type">Borç Tipine Göre</option>
+                                    <option value="monthly">Aylık Ödemeye Göre</option>
+                                    <option value="lastPaid">Son Ödenen Aya Göre</option>
+                                    <option value="finalMonth">Son Ödenecek Aya Göre</option>
+                                    <option value="remainingInstallments">Kalan Taksit Sayısına Göre</option>
+                                    <option value="remainingPrincipal">Kalan Anaparaya Göre</option>
+                                    <option value="closureToday">Bugün Kapatılma Miktarına Göre</option>
+                                </select>
+                                <select id="mainListView" class="form-control main-list-view-select" title="Görünüm seçiniz" aria-label="Liste görünümü seçiniz">
+                                    <option value="list">Liste Görünümü</option>
+                                    <option value="card">Kart Görünümü</option>
+                                </select>
+                                <select id="mainCardsPerRow" class="form-control main-list-view-select" title="Her satırda yer alacak kart sayısı" aria-label="Her satırdaki kart sayısı" style="display: none;">
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="table-responsive" id="recordsTableWrap">
                             <table class="records-table">
@@ -6356,15 +6479,15 @@ tr.payment-due-blink:hover td {
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th>Borç Adı</th>
-                                        <th>Tipi</th>
-                                        <th>Aylık Ödeme</th>
-                                        <th>Son<br>Ödenen Ay</th>
-                                        <th>Son Ödenecek<br>Ay</th>
-                                        <th>İlerleme Durumu</th>
-                                        <th>Kalan<br>Anapara</th>
-                                        <th>Bugün<br>Kapatılırsa</th>
-                                        <th>Durum</th>
+                                        <th class="sortable-th" data-sort-key="title" title="Borç adına göre sırala">Borç Adı</th>
+                                        <th class="sortable-th" data-sort-key="type" title="Borç tipine göre sırala">Tipi</th>
+                                        <th class="sortable-th" data-sort-key="monthly" title="Aylık ödemeye göre sırala">Aylık Ödeme</th>
+                                        <th class="sortable-th" data-sort-key="lastPaid" title="Son ödenen aya göre sırala">Son<br>Ödenen Ay</th>
+                                        <th class="sortable-th" data-sort-key="finalMonth" title="Son ödenecek aya göre sırala">Son Ödenecek<br>Ay</th>
+                                        <th class="sortable-th" data-sort-key="remainingInstallments" title="Kalan taksit sayısına göre sırala">İlerleme Durumu</th>
+                                        <th class="sortable-th" data-sort-key="remainingPrincipal" title="Kalan anaparaya göre sırala">Kalan<br>Anapara</th>
+                                        <th class="sortable-th" data-sort-key="closureToday" title="Bugün kapatılma miktarına göre sırala">Bugün<br>Kapatılırsa</th>
+                                        <th class="sortable-th" data-sort-key="status" title="Duruma göre sırala">Durum</th>
                                     </tr>
                                 </thead>
                                 <tbody id="recordsTableBody"></tbody>
@@ -6468,26 +6591,6 @@ tr.payment-due-blink:hover td {
                                 <div class="form-group">
                                     <label class="form-label" for="prefKkdf">Varsayılan KKDF (%)</label>
                                     <input type="number" step="0.01" min="0" id="prefKkdf" class="form-control" placeholder="15">
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group-box" style="padding-bottom: 8px; margin-bottom: 16px;">
-                            <legend style="color: var(--accent-primary);"><i class="fa-solid fa-table-cells-large"></i> Aktif Kredi &amp; Taksit Listesi Seçenekleri</legend>
-                            <div class="list-view-row is-list" id="listViewRow">
-                                <div class="form-group">
-                                    <label class="form-label" for="prefListView">Ana sayfada görüntüleme seçeneğini seçiniz</label>
-                                    <select id="prefListView" class="form-control">
-                                        <option value="list">Liste Görünümü</option>
-                                        <option value="card">Kart Görünümü</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="prefCardsPerRowGroup" style="display: none;">
-                                    <label class="form-label" for="prefCardsPerRow">Her satırda kaç adet kart yerleşsin?</label>
-                                    <select id="prefCardsPerRow" class="form-control">
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
                                 </div>
                             </div>
                         </fieldset>
@@ -7238,7 +7341,9 @@ const DEFAULT_PREFERENCES = {
     warnCriticalDays: 3,
     warnEndingMonths: 2,
     listView: 'list',
-    cardsPerRow: 4
+    cardsPerRow: 4,
+    sortBy: 'title',
+    tableSort: null
 };
 
 const DEFAULT_VISUAL_SETTINGS = {
@@ -7662,8 +7767,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('savePreferencesBtn').addEventListener('click', () => handleUserPreferencesUpdate(true));
     document.getElementById('applyPreferencesBtn').addEventListener('click', () => handleUserPreferencesUpdate(false));
     document.getElementById('prefHighlightDue').addEventListener('change', updateDueWarnOptionsUi);
-    document.getElementById('prefListView').addEventListener('change', updateListViewOptionsUi);
     document.getElementById('mainListView').addEventListener('change', handleMainListViewChange);
+    document.getElementById('mainSortBy').addEventListener('change', handleMainSortChange);
+    document.getElementById('mainCardsPerRow').addEventListener('change', handleMainCardsPerRowChange);
+    document.getElementById('downloadPdfBtn').addEventListener('click', openPdfDownloadConfirm);
     document.getElementById('prefWarnUpcomingDays').addEventListener('input', updateDueWarnOptionsUi);
     document.getElementById('prefWarnCriticalDays').addEventListener('input', updateDueWarnOptionsUi);
     document.getElementById('saveVisualSettingsBtn').addEventListener('click', () => saveVisualSettings(true));
@@ -8929,9 +9036,6 @@ function populateUserForms() {
     document.getElementById('prefWarnUpcomingDays').value = prefs.warnUpcomingDays;
     document.getElementById('prefWarnCriticalDays').value = prefs.warnCriticalDays;
     document.getElementById('prefWarnEndingMonths').value = prefs.warnEndingMonths;
-    document.getElementById('prefListView').value = prefs.listView === 'card' ? 'card' : 'list';
-    document.getElementById('prefCardsPerRow').value = [4, 5, 6].includes(Number(prefs.cardsPerRow)) ? String(prefs.cardsPerRow) : '4';
-    updateListViewOptionsUi();
     updateDueWarnOptionsUi();
 
 }
@@ -8990,9 +9094,6 @@ async function handleUserPreferencesUpdate(closeAfter = false) {
     }
 
     const highlightDue = document.getElementById('prefHighlightDue').checked;
-    const listView = document.getElementById('prefListView').value === 'card' ? 'card' : 'list';
-    const cardsPerRowRaw = parseInt(document.getElementById('prefCardsPerRow').value, 10);
-    const cardsPerRow = [4, 5, 6].includes(cardsPerRowRaw) ? cardsPerRowRaw : 4;
     const prevPrefs = getPreferences();
     let warnUpcomingDays = prevPrefs.warnUpcomingDays;
     let warnCriticalDays = prevPrefs.warnCriticalDays;
@@ -9027,8 +9128,10 @@ async function handleUserPreferencesUpdate(closeAfter = false) {
         warnUpcomingDays,
         warnCriticalDays,
         warnEndingMonths,
-        listView,
-        cardsPerRow
+        listView: prevPrefs.listView,
+        cardsPerRow: prevPrefs.cardsPerRow,
+        sortBy: prevPrefs.sortBy,
+        tableSort: prevPrefs.tableSort
     };
 
     await autoSaveAllData();
@@ -9214,23 +9317,30 @@ function openRecordDetailsModal(id) {
                 <p>${record.notes ? escapeHtml(String(record.notes)) : 'Not eklenmemiş.'}</p>
             </div>
         </div>
-        <div class="record-details-actions">
-            <button type="button" class="btn btn-primary" style="margin: 4px 0;" onclick="openPaymentPlanModal('${record.id}')" style="background-color: ${catObj.color}20; color: ${catObj.color}; border: 1px solid ${catObj.color}40;">
-                <i class="fa-solid fa-calendar-days"></i>Ödeme Planı
+        <div class="record-details-actions" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; gap: 8px;">
+            <button type="button" class="btn btn-primary" onclick="openPaymentPlanModal('${record.id}')">
+                <i class="fa-solid fa-calendar-days"></i> Ödeme Planı
             </button>
-            <button type="button" class="btn btn-secondary" style="margin: 4px 0;" onclick="editRecordModal('${record.id}')">
-                <i class="fa-solid fa-pen"></i>Düzenle
+            <button type="button" class="btn btn-primary" onclick="openSingleRecordChart('${record.id}')">
+                <i class="fa-solid fa-chart-line"></i> Grafik Göster
             </button>
-            <button type="button" class="btn btn-danger" style="margin: 4px 0;" onclick="deleteRecord('${record.id}')">
-                <i class="fa-solid fa-trash"></i>Sil
-            </button>
-            <button type="button" class="btn btn-primary" style="margin: 4px 0;" onclick="openSingleRecordChart('${record.id}')">
-                <i class="fa-solid fa-chart-line"></i>Grafik Göster
-            </button>
-            <button type="button" class="btn btn-secondary" style="margin: 4px 0;" onclick="closeRecordDetailsModal()">
-                <i class="fa-solid fa-xmark"></i>Kapat
+            <button type="button" class="btn btn-primary" onclick="closeRecordDetailsModal()">
+                <i class="fa-solid fa-file-pdf"></i> PDF İndir
             </button>
         </div>
+        <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end; gap: 8px;">
+                    <button type="button" class="btn btn-primary" onclick="editRecordModal('${record.id}')">
+                <i class="fa-solid fa-pen"></i> Düzenle
+            </button>
+            <button type="button" class="btn btn-primary" onclick="deleteRecord('${record.id}')">
+                <i class="fa-solid fa-trash"></i> Sil
+            </button>
+            <button type="button" class="btn btn-danger" onclick="closeRecordDetailsModal()">
+                <i class="fa-solid fa-xmark"></i> Pencere Kapat
+            </button>
+        </div>
+    </div>
     `;
     document.getElementById('recordDetailsModalOverlay').classList.add('active');
 }
@@ -10546,22 +10656,355 @@ function bindServerInfoPanel() {
     });
 }
 
-function updateListViewOptionsUi() {
-    const isCard = document.getElementById('prefListView').value === 'card';
-    document.getElementById('prefCardsPerRowGroup').style.display = isCard ? '' : 'none';
-    document.getElementById('listViewRow').classList.toggle('is-list', !isCard);
+const SORT_LABELS = {
+    title: 'Borç Adına Göre',
+    type: 'Borç Tipine Göre',
+    monthly: 'Aylık Ödemeye Göre',
+    lastPaid: 'Son Ödenen Aya Göre',
+    finalMonth: 'Son Ödenecek Aya Göre',
+    remainingInstallments: 'Kalan Taksit Sayısına Göre',
+    remainingPrincipal: 'Kalan Anaparaya Göre',
+    closureToday: 'Bugün Kapatılma Miktarına Göre'
+};
+
+const TABLE_SORT_KEYS = ['title', 'type', 'monthly', 'lastPaid', 'finalMonth', 'remainingInstallments', 'remainingPrincipal', 'closureToday', 'status'];
+
+function getSortBy() {
+    const v = getPreferences().sortBy;
+    return SORT_LABELS[v] ? v : 'title';
+}
+
+function getTableSort() {
+    const t = getPreferences().tableSort;
+    if (t && TABLE_SORT_KEYS.includes(t.key)) return { key: t.key, dir: t.dir === 'desc' ? 'desc' : 'asc' };
+    return { key: '', dir: 'asc' };
+}
+
+function getRecordSortValue(r, key) {
+    const paid = parseInt(r.paidInstallments, 10) || 0;
+    const count = parseInt(r.installmentCount, 10) || 0;
+    const completed = count > 0 && paid >= count;
+    switch (key) {
+        case 'title': return String(r.title || '');
+        case 'type': {
+            const i = appState.debtTypes.findIndex(t => t.name === r.debtType);
+            return i < 0 ? 9999 : i;
+        }
+        case 'monthly': return count ? (Number(r.totalAmount) || 0) / count : 0;
+        case 'lastPaid': {
+            if (paid <= 0) return -1;
+            const d = getPlanDueDate(r, paid);
+            return d ? d.getTime() : -1;
+        }
+        case 'finalMonth': {
+            const d = getPlanDueDate(r, count);
+            return d ? d.getTime() : 0;
+        }
+        case 'remainingInstallments': return Math.max(0, count - paid);
+        case 'remainingPrincipal': return completed ? 0 : calculateEarlyClosureDetails(r).remainingPrincipal;
+        case 'closureToday': return completed ? 0 : calculateEarlyClosureDetails(r).closureToday;
+        case 'status': return completed ? 1 : 0;
+    }
+    return 0;
+}
+
+function getDisplayRecords() {
+    const base = appState.selectedDebtType === 'ALL'
+        ? appState.records
+        : appState.records.filter(r => r.debtType === appState.selectedDebtType);
+    const list = [...base];
+    const NEVER = Number.MAX_SAFE_INTEGER;
+    const byText = (a, b) => String(a || '').localeCompare(String(b || ''), 'tr', { sensitivity: 'base' });
+    const dueTime = (r) => {
+        const paid = parseInt(r.paidInstallments, 10) || 0;
+        const count = parseInt(r.installmentCount, 10) || 0;
+        if (paid >= count) return NEVER;
+        const d = getPlanDueDate(r, paid + 1);
+        return d ? d.getTime() : NEVER;
+    };
+    const score = (r) => {
+        const w = getRecordAlert(r);
+        return w ? PAYMENT_WARNING_RANK[w.level] : 0;
+    };
+
+    const isCard = getPreferences().listView === 'card';
+    let key = '';
+    let dir = 1;
+    if (isCard) {
+        key = getSortBy();
+    } else {
+        const ts = getTableSort();
+        key = ts.key;
+        dir = ts.dir === 'desc' ? -1 : 1;
+    }
+
+    if (!key) {
+        list.sort((a, b) => (score(b) - score(a)) || (dueTime(a) - dueTime(b)));
+        return list;
+    }
+
+    const cache = new Map();
+    const val = (r) => {
+        if (!cache.has(r)) cache.set(r, getRecordSortValue(r, key));
+        return cache.get(r);
+    };
+    list.sort((a, b) => {
+        const va = val(a), vb = val(b);
+        let c = (typeof va === 'string') ? byText(va, vb) : (va - vb);
+        if (c !== 0) return c * dir;
+        return byText(a.title, b.title);
+    });
+    return list;
+}
+
+async function handleTableSortClick(key) {
+    if (!TABLE_SORT_KEYS.includes(key)) return;
+    const cur = getTableSort();
+    let next = null;
+    if (cur.key !== key) next = { key, dir: 'asc' };
+    else if (cur.dir === 'asc') next = { key, dir: 'desc' };
+    appState.preferences = Object.assign({}, getPreferences(), { tableSort: next });
+    render();
+    await autoSaveAllData();
+}
+
+function updateTableSortIndicators() {
+    const cur = getTableSort();
+    document.querySelectorAll('#recordsTableWrap th.sortable-th').forEach(th => {
+        const active = th.dataset.sortKey === cur.key;
+        th.classList.toggle('sorted', active);
+        th.setAttribute('aria-sort', active ? (cur.dir === 'desc' ? 'descending' : 'ascending') : 'none');
+        let ind = th.querySelector('.sort-ind');
+        if (!ind) {
+            ind = document.createElement('i');
+            th.appendChild(ind);
+        }
+        ind.className = 'sort-ind fa-solid ' + (active ? (cur.dir === 'desc' ? 'fa-sort-down' : 'fa-sort-up') : 'fa-sort');
+    });
+}
+
+function bindTableSorting() {
+    const head = document.querySelector('#recordsTableWrap thead');
+    if (!head || head.dataset.bound === 'true') return;
+    head.dataset.bound = 'true';
+    head.addEventListener('click', (e) => {
+        const th = e.target.closest('th.sortable-th');
+        if (th) handleTableSortClick(th.dataset.sortKey);
+    });
 }
 
 async function handleMainListViewChange(e) {
     const value = e.target.value === 'card' ? 'card' : 'list';
     appState.preferences = Object.assign({}, getPreferences(), { listView: value });
-    const settingsSelect = document.getElementById('prefListView');
-    if (settingsSelect) {
-        settingsSelect.value = value;
-        updateListViewOptionsUi();
-    }
     render();
     await autoSaveAllData();
+    showToast(`Liste görünümü "${value === 'card' ? 'Kart Görünümü' : 'Liste Görünümü'}" olarak kaydedildi.`);
+}
+
+async function handleMainCardsPerRowChange(e) {
+    const n = parseInt(e.target.value, 10);
+    const value = [4, 5].includes(n) ? n : 4;
+    appState.preferences = Object.assign({}, getPreferences(), { cardsPerRow: value });
+    render();
+    await autoSaveAllData();
+    showToast(`Satırdaki kart sayısı ${value} olarak kaydedildi.`);
+}
+
+async function handleMainSortChange(e) {
+    const value = SORT_LABELS[e.target.value] ? e.target.value : 'title';
+    appState.preferences = Object.assign({}, getPreferences(), { sortBy: value });
+    render();
+    await autoSaveAllData();
+    showToast(`Sıralama "${SORT_LABELS[value]}" olarak kaydedildi.`);
+}
+
+function openPdfDownloadConfirm() {
+    openDeleteConfirmModal(
+        "Aktif Kredi & Borç Listesi, ana sayfadaki mevcut sıralama ve görünüme (Liste / Kart) göre PDF olarak indirilecektir. PDF İndirme işlemini onaylıyor musunuz?",
+        generateRecordsPdf,
+        "PDF İndirme Onayı",
+        "info"
+    );
+}
+
+function buildPdfRecordInfo(rec) {
+    syncRecordLastPaymentMonth(rec);
+    const count = parseInt(rec.installmentCount, 10) || 1;
+    const paid = parseInt(rec.paidInstallments, 10) || 0;
+    const completed = paid === count;
+    const closure = calculateEarlyClosureDetails(rec);
+    return {
+        title: String(rec.title || ''),
+        bank: rec.bankName ? String(rec.bankName) : '',
+        type: String(rec.debtType || ''),
+        monthly: moneyText(rec.totalAmount / count),
+        lastPaid: getRecordLastPaidMonthLabel(rec),
+        finalMonth: getRecordFinalPaymentMonthLabel(rec),
+        paid, count,
+        percent: Math.round((paid / count) * 100),
+        remaining: moneyText(completed ? 0 : closure.remainingPrincipal),
+        closureToday: moneyText(completed ? 0 : closure.closureToday),
+        elapsedDays: (!completed && closure.elapsedDays > 0) ? closure.elapsedDays : 0,
+        completed,
+        status: completed ? 'Tamamlandı' : 'Devam Ediyor',
+        alerts: [getPaymentWarning(rec), getEndingWarning(rec)].filter(Boolean).map(getPaymentWarningText)
+    };
+}
+
+function buildPdfElement(records, typeLabel) {
+    const prefs = getPreferences();
+    const isCard = prefs.listView === 'card';
+    const esc = escapeHtml;
+    const fontFamily = getComputedStyle(document.body).fontFamily.replace(/"/g, "'");
+    const title = headerTitle.toLocaleUpperCase('tr-TR');
+    const infos = records.map(buildPdfRecordInfo);
+
+    const bar = (i) => `<div class="pdf-bar"><div style="width:${i.percent}%;"></div></div>`;
+
+    let body = '';
+    if (!infos.length) {
+        body = '<div style="text-align:center;">Henüz eklenmiş bir kredi veya taksit kaydı bulunmuyor.</div>';
+    } else if (!isCard) {
+        body = `<table class="pdf-table">
+            <colgroup>
+                <col style="width:20%"><col style="width:13%"><col style="width:9%"><col style="width:9%"><col style="width:9%">
+                <col style="width:12%"><col style="width:9%"><col style="width:9%"><col style="width:10%">
+            </colgroup>
+            <thead><tr>
+                <th>Borç Adı</th><th>Tipi</th><th>Aylık Ödeme</th><th>Son Ödenen Ay</th><th>Son Ödenecek Ay</th>
+                <th>İlerleme Durumu</th><th>Kalan Anapara</th><th>Bugün Kapatılırsa</th><th>Durum</th>
+            </tr></thead>
+            <tbody>${infos.map(i => `<tr>
+                <td class="pdf-left"><strong>${esc(i.title)}</strong><div>${i.bank ? 'Kurum: ' + esc(i.bank) : 'Ek bilgi yok'}</div>${i.alerts.map(a => `<div>${esc(a)}</div>`).join('')}</td>
+                <td>${esc(i.type)}</td>
+                <td><strong>${esc(i.monthly)}</strong></td>
+                <td>${esc(i.lastPaid)}</td>
+                <td>${esc(i.finalMonth)}</td>
+                <td><div class="pdf-split"><span>${i.paid} / ${i.count} Taksit</span><span>%${i.percent}</span></div>${bar(i)}</td>
+                <td><strong>${esc(i.remaining)}</strong></td>
+                <td><strong>${esc(i.closureToday)}</strong>${i.elapsedDays ? `<div>+${i.elapsedDays} gün faiz dahil</div>` : ''}</td>
+                <td>${esc(i.status)}</td>
+            </tr>`).join('')}</tbody>
+        </table>`;
+    } else {
+        const cardHtml = (i) => `<div class="pdf-card">
+            <div class="pdf-card-head">
+            <div class="pdf-card-top"><strong>${esc(i.title)}</strong><span class="pdf-pill">${esc(i.status)}</span></div>
+            <div class="pdf-card-meta"><span class="pdf-pill">${esc(i.type)}</span><span>${i.bank ? esc(i.bank) : '-'}</span></div>
+            <div class="pdf-card-alerts">${i.alerts.map(a => `<div>${esc(a)}</div>`).join('')}</div>
+            </div>
+            <div class="pdf-card-info">
+                <div><span>Aylık Ödeme</span><strong>${esc(i.monthly)}</strong></div>
+                <div><span>Son Ödenen Ay</span><strong>${esc(i.lastPaid)}</strong></div>
+                <div><span>Son Ödenecek Ay</span><strong>${esc(i.finalMonth)}</strong></div>
+                <div><span>Kalan Anapara</span><strong>${esc(i.remaining)}</strong></div>
+                <div><span>Bugün Kapatılırsa</span><strong>${esc(i.closureToday)}</strong></div>
+            </div>
+            <div class="pdf-progress"><span>${i.paid}/${i.count}</span>${bar(i)}<span>%${i.percent}</span></div>
+        </div>`;
+        for (let k = 0; k < infos.length; k += 3) {
+            body += `<div class="pdf-card-row${k > 0 && k % 9 === 0 ? ' pdf-page-start' : ''}">${infos.slice(k, k + 3).map(cardHtml).join('')}</div>`;
+        }
+    }
+
+    const root = document.createElement('div');
+    root.id = 'pdfRoot';
+    root.innerHTML = `<style>
+        #pdfRoot { position:relative; width:1061px; box-sizing:border-box; background:#fff; color:#000; font-family:${fontFamily}; font-size:10pt; line-height:1.35; }
+        #pdfRoot * { box-sizing:border-box; color:#000; font-family:inherit; }
+        #pdfRoot .pdf-head { position:relative; min-height:48px; padding:0 56px; display:flex; align-items:center; justify-content:center; }
+        #pdfRoot .pdf-head img { position:absolute; left:0; top:0; width:48px; height:48px; }
+        #pdfRoot .pdf-title { font-weight:800; text-align:center; }
+        #pdfRoot .pdf-gap { height:1.35em; }
+        #pdfRoot .pdf-type { text-align:center; font-weight:700; }
+        #pdfRoot .pdf-table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:8pt; }
+        #pdfRoot .pdf-table th, #pdfRoot .pdf-table td { background:#fff !important; color:#000 !important; border:1px solid #000; padding:3px 4px; text-align:center; vertical-align:middle; overflow-wrap:anywhere; }
+        #pdfRoot .pdf-table td.pdf-left { text-align:left; }
+        #pdfRoot .pdf-table tr { page-break-inside:avoid; break-inside:avoid; }
+        #pdfRoot .pdf-table th { font-weight:700; white-space:normal; }
+        #pdfRoot .pdf-split { display:flex; justify-content:space-between; gap:4px; }
+        #pdfRoot .pdf-bar { height:6px; border:1px solid #000; border-radius:3px; overflow:hidden; margin-top:3px; }
+        #pdfRoot .pdf-bar div { height:100%; background:#000; }
+        #pdfRoot .pdf-page-start { page-break-before:always; break-before:page; }
+        #pdfRoot .pdf-card-row { display:flex; gap:8px; margin-bottom:8px; page-break-inside:avoid; break-inside:avoid; }
+        #pdfRoot .pdf-card { flex:0 0 calc((100% - 16px) / 3); width:calc((100% - 16px) / 3); border:1px solid #000; border-radius:8px; padding:3px 6px; font-size:8pt; line-height:1.2; display:flex; flex-direction:column; justify-content:center; gap:1px; overflow-wrap:anywhere; box-sizing:border-box; }
+        #pdfRoot .pdf-card-head { display:flex; flex-direction:column; gap:1px; padding-bottom:2px; }
+        #pdfRoot .pdf-card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:6px; }
+        #pdfRoot .pdf-card-meta { display:flex; justify-content:space-between; align-items:center; gap:6px; }
+        #pdfRoot .pdf-pill { border:1px solid #000; border-radius:50px; padding:0 6px; white-space:nowrap; }
+        #pdfRoot .pdf-card-info { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2px 4px; border-top:1px solid #000; padding-top:4px; margin-top:0; }
+        #pdfRoot .pdf-card-info div { display:flex; flex-direction:column; align-items:center; text-align:center; min-width:0; gap:1px; }
+        #pdfRoot .pdf-card-alerts { height:1.45em; overflow:hidden; display:flex; gap:6px; }
+        #pdfRoot .pdf-card-alerts div { min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        #pdfRoot .pdf-progress { display:flex; align-items:center; gap:6px; margin-top:3px; }
+        #pdfRoot .pdf-progress .pdf-bar { flex:1; margin-top:0; }
+    </style>
+    <div class="pdf-head"><img src="${SITE_LOGO}" alt=""><div class="pdf-title">${esc(title)}</div></div>
+    <div class="pdf-type">${esc(typeLabel)}</div>
+    <div class="pdf-gap"></div>
+    ${body}`;
+    return root;
+}
+
+async function generateRecordsPdf() {
+    if (typeof html2pdf === 'undefined') {
+        showToast("PDF kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edin.", true);
+        return;
+    }
+
+    const typeLabel = appState.selectedDebtType === 'ALL' ? 'Tüm Borç Tipleri' : appState.selectedDebtType;
+    const host = document.createElement('div');
+    host.style.cssText = 'position:fixed;left:-10000px;top:0;width:1061px;pointer-events:none;';
+    const el = buildPdfElement(getDisplayRecords(), typeLabel);
+    host.appendChild(el);
+    document.body.appendChild(host);
+
+    try {
+        try { await document.fonts.ready; } catch (e) {}
+
+        // Tüm kartlar sabit yükseklikte (128 px); içerik daha uzunsa yalnızca o durumda büyütülür
+        const FIXED_CARD_HEIGHT = 128;
+        let maxH = FIXED_CARD_HEIGHT;
+        let headH = 0;
+        el.querySelectorAll('.pdf-card-head').forEach(h => { headH = Math.max(headH, h.offsetHeight); });
+        el.querySelectorAll('.pdf-card-head').forEach(h => { h.style.height = headH + 'px'; });
+        const cards = el.querySelectorAll('.pdf-card');
+        cards.forEach(c => { maxH = Math.max(maxH, c.offsetHeight); });
+        cards.forEach(c => { c.style.height = maxH + 'px'; });
+
+        const scale = Math.max(1, Math.min(3, Math.floor((30000 / Math.max(el.offsetHeight, 1)) * 10) / 10));
+        const stamp = new Date().toISOString().split('T')[0];
+
+        await html2pdf().set({
+            margin: [15, 8, 15, 8],
+            filename: `Kredi-Taksit-Listesi-${stamp}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale, useCORS: true, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', '.pdf-card-row', '.pdf-head'] }
+        }).from(el).toPdf().get('pdf').then(pdf => {
+            const d = new Date();
+            const dateText = [String(d.getDate()).padStart(2, '0'), String(d.getMonth() + 1).padStart(2, '0'), d.getFullYear()].join('.');
+            const pw = pdf.internal.pageSize.getWidth();
+            const ph = pdf.internal.pageSize.getHeight();
+            const total = pdf.internal.getNumberOfPages();
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(6);
+            pdf.setTextColor(0, 0, 0);
+            for (let n = 1; n <= total; n++) {
+                pdf.setPage(n);
+                pdf.text(dateText, 8, ph - 7, { baseline: 'bottom' });
+                pdf.text('Sayfa No.: 1-' + n, pw - 8, ph - 7, { align: 'right', baseline: 'bottom' });
+            }
+        }).save();
+
+        showToast("PDF dosyası oluşturuldu ve indirildi.");
+    } catch (err) {
+        console.error('PDF oluşturma hatası:', err);
+        showToast("PDF oluşturulurken bir hata oluştu.", true);
+    } finally {
+        host.remove();
+    }
 }
 
 function renderRecords(records) {
@@ -10569,13 +11012,25 @@ function renderRecords(records) {
     const isCard = prefs.listView === 'card';
     const mainSelect = document.getElementById('mainListView');
     if (mainSelect) mainSelect.value = isCard ? 'card' : 'list';
+    const sortSelect = document.getElementById('mainSortBy');
+    if (sortSelect) {
+        sortSelect.value = getSortBy();
+        sortSelect.style.display = isCard ? '' : 'none';
+    }
+    bindTableSorting();
+    updateTableSortIndicators();
+    const perRowSelect = document.getElementById('mainCardsPerRow');
+    if (perRowSelect) {
+        perRowSelect.value = [4, 5].includes(Number(prefs.cardsPerRow)) ? String(prefs.cardsPerRow) : '4';
+        perRowSelect.style.display = isCard ? '' : 'none';
+    }
     const wrap = document.getElementById('recordsTableWrap');
     const grid = document.getElementById('recordsCardGrid');
     if (!wrap || !grid) return renderTable(records);
     wrap.style.display = isCard ? 'none' : '';
     grid.style.display = isCard ? 'grid' : 'none';
     if (isCard) {
-        const perRow = [4, 5, 6].includes(Number(prefs.cardsPerRow)) ? Number(prefs.cardsPerRow) : 4;
+        const perRow = [4, 5].includes(Number(prefs.cardsPerRow)) ? Number(prefs.cardsPerRow) : 4;
         grid.style.setProperty('--cards-per-row', perRow);
         renderCards(records, grid);
     } else {
@@ -10618,13 +11073,13 @@ function renderCards(records, grid) {
                 <span class="badge" style="background-color: ${catObj.color}20; color: ${catObj.color}; border: 1px solid ${catObj.color}40;">${escapeHtml(rec.debtType)}</span>
                 <span class="record-card-sub" title="${escapeHtml(rec.bankName || '')}">${rec.bankName ? escapeHtml(rec.bankName) : '-'}</span>
             </div>
-            ${paymentIndicatorsHtml(rec) ? `<div class="record-card-alerts">${paymentIndicatorsHtml(rec)}</div>` : ''}
+            <div class="record-card-alerts">${paymentIndicatorsHtml(rec)}</div>
             <div class="record-card-info">
                 <div class="record-card-cell"><span>Aylık Ödeme</span><strong>${moneyHtml(monthlyPayment)}</strong></div>
-                <div class="record-card-cell"><span>Kalan Anapara</span><strong>${moneyHtml(isCompleted ? 0 : closureDetails.remainingPrincipal)}</strong></div>
                 <div class="record-card-cell"><span>Son Ödenen Ay</span><strong>${escapeHtml(getRecordLastPaidMonthLabel(rec))}</strong></div>
                 <div class="record-card-cell"><span>Son Ödenecek Ay</span><strong>${escapeHtml(getRecordFinalPaymentMonthLabel(rec))}</strong></div>
-                <div class="record-card-cell record-card-cell-wide"><span>Bugün Kapatılırsa</span><strong style="color: ${isCompleted ? 'var(--success)' : 'var(--danger)'};"${!isCompleted && closureDetails.elapsedDays > 0 ? ` title="+${closureDetails.elapsedDays} gün faiz dahil"` : ''}>${moneyHtml(isCompleted ? 0 : closureDetails.closureToday)}</strong></div>
+                <div class="record-card-cell"><span>Kalan Anapara</span><strong>${moneyHtml(isCompleted ? 0 : closureDetails.remainingPrincipal)}</strong></div>
+                <div class="record-card-cell"><span>Bugün Kapatılırsa</span><strong style="color: ${isCompleted ? 'var(--success)' : 'var(--danger)'};"${!isCompleted && closureDetails.elapsedDays > 0 ? ` title="+${closureDetails.elapsedDays} gün faiz dahil"` : ''}>${moneyHtml(isCompleted ? 0 : closureDetails.closureToday)}</strong></div>
             </div>
             <div class="record-card-progress">
                 <span>${rec.paidInstallments}/${rec.installmentCount}</span>
@@ -10640,15 +11095,7 @@ function renderCards(records, grid) {
 function render() {
     renderDebtTypeChips();
 
-    let recordsToRender = appState.selectedDebtType === 'ALL'
-        ? appState.records
-        : appState.records.filter(r => r.debtType === appState.selectedDebtType);
-
-    const dueScore = r => {
-        const w = getRecordAlert(r);
-        return w ? PAYMENT_WARNING_RANK[w.level] : 0;
-    };
-    recordsToRender = [...recordsToRender].sort((a, b) => dueScore(b) - dueScore(a));
+    const recordsToRender = getDisplayRecords();
 
     renderRecords(recordsToRender);
     renderStats(recordsToRender);
