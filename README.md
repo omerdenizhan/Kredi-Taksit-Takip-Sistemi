@@ -1,5 +1,3 @@
-<div align="center">
-
 # 💳 Kredi & Taksit Takip Sistemi
 
 **Kredi, kart taksidi ve kişisel borçlarınızı tek ekrandan yönetin, analiz edin ve ödeme gününü kaçırmayın.**
@@ -555,7 +553,7 @@ Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsa
 - Depoya `node_modules/` ve içinde veri bulunan `database.db` dahil edilmemelidir.
 
 ### Katkı
-Hata bildirimi ve öneriler için issue açabilir, değişiklikler için pull request gönderebilirsiniz. Büyük değişikliklerde önce bir issue ile tartışmanız önerilir.
+Hata bildirimi ve öneriler için issue açabilir, değişiklikler için pull request gönderebilirsiniz. Büyük değişikliklerde önce bir issue ile tartışmanız önerilir. Bu araç yalnızca takip ve bilgilendirme amaçlıdır; finansal tavsiye değildir.
 
 ---
 
@@ -565,7 +563,6 @@ Bu proje [Unlicense](https://unlicense.org/) ile kamu malı olarak sunulmuştur;
 
 ---
 
-
 ## 🕰️ Son Güncelleme
 09 Ekim 2026
 
@@ -574,12 +571,3 @@ Bu proje [Unlicense](https://unlicense.org/) ile kamu malı olarak sunulmuştur;
 <p align="center">❤️ Made with Love ❤️</p>
 
 ---
-
-
-<div align="center">
-
-Geliştirici: **[Ömer Denizhan](https://github.com/omerdenizhan)**
-
-Bu araç yalnızca takip ve bilgilendirme amaçlıdır; finansal tavsiye değildir.
-
-</div>
