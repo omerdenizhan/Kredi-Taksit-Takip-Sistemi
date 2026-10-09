@@ -1,4 +1,4 @@
-# 💳 Kredi & Taksit Takip Sistemi
+<h1 align="center">⭐ Kredi & Taksit Takip Sistemi ⭐</h1>
 
 **Kredi, kart taksidi ve kişisel borçlarınızı tek ekrandan yönetin, analiz edin ve ödeme gününü kaçırmayın.**
 
