@@ -11,30 +11,6 @@
 
 </div>
 
----
-
-## 📑 İçindekiler
-
-1. [Genel Bakış](#-genel-bakış)
-2. [Özellikler](#-özellikler)
-3. [Hızlı Başlangıç](#-hızlı-başlangıç)
-4. [Çalışma Modları ve Depolama](#-çalışma-modları-ve-depolama)
-5. [Kullanım Kılavuzu](#-kullanım-kılavuzu)
-6. [Finansal Hesaplama Mantığı](#-finansal-hesaplama-mantığı)
-7. [Uyarı ve Bildirim Sistemi](#-uyarı-ve-bildirim-sistemi)
-8. [Ayarlar Rehberi](#-ayarlar-rehberi)
-9. [Yedekleme ve Geri Yükleme](#-yedekleme-ve-geri-yükleme)
-10. [Güvenlik ve Gizlilik](#-güvenlik-ve-gizlilik)
-11. [Sunucu API'si](#-sunucu-apisi)
-12. [Mimari ve Proje Yapısı](#-mimari-ve-proje-yapısı)
-13. [Veri Modeli](#-veri-modeli)
-14. [Harici Bağımlılıklar ve Ağ İstekleri](#-harici-bağımlılıklar-ve-ağ-istekleri)
-15. [Sorun Giderme](#-sorun-giderme)
-16. [Geliştirici Notları](#-geliştirici-notları)
-17. [Lisans](#-lisans)
-
----
-
 ## 🔎 Genel Bakış
 
 Bu proje, bireysel kredi ve taksitli borçları takip etmek için geliştirilmiş **tek sayfalık (`index.html`) bir web uygulamasıdır**. Derleme adımı, framework veya veritabanı sunucusu gerektirmez.
