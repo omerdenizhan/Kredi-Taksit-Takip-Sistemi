@@ -565,6 +565,17 @@ Bu proje [Unlicense](https://unlicense.org/) ile kamu malı olarak sunulmuştur;
 
 ---
 
+
+## 🕰️ Last Update
+09 Ekim, 2026
+
+---
+
+<p align="center">❤️ Made with Love ❤️</p>
+
+---
+
+
 <div align="center">
 
 Geliştirici: **[Ömer Denizhan](https://github.com/omerdenizhan)**
