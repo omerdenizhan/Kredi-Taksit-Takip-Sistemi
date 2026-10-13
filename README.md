@@ -29,41 +29,70 @@ Mod, uygulama açılırken **otomatik** belirlenir; üst çubuktaki ve giriş ek
 ### 📊 Ana Ekran (Dashboard)
 - **Özet kartları:** Toplam Borç, Aylık Ödeme, Kalan Anapara, Bugün Kapatılırsa, Ödenen, Kalan Toplam Borç.
 - **Borç Tipi Dağılımı** grafiği (Chart.js). Açıklamadaki bir tipe tıklayınca o tipe ait **teknik grafik penceresi** açılır; tek bir kayıt için de ayrı grafik görüntülenebilir.
-- **Aktif Kredi & Taksit Listesi:** tablo (liste) veya kart görünümü, kart görünümünde satır başına 4 / 5 / 6 kart.
+- **Aktif Kredi & Taksit Listesi:** tablo (liste) veya kompakt kart görünümü; görünüm, listenin başlığındaki seçim kutusundan değiştirilir, kart görünümünde satır başına 2 / 3 / 4 / 5 / 6 kart seçilebilir. Satırlar ve kartlar borç tipinin simgesini ve rengini gösterir.
+- **PDF İndir:** liste (mevcut sıralama ve görünüme göre) veya tek bir kayıt (ödeme planı + teknik grafikler) metin tabanlı **PDF** olarak indirilir ([jsPDF](https://github.com/parallax/jsPDF)).
+- **Menü:** logoya tıklayınca açılan **MENÜ** listesinden *Yeni Kayıt* ve *Ayarlar* açılır.
 - **Borç tipi çipleri** ile listeyi tek tıkla filtreleme.
-- Üst çubukta canlı **tarih/saat** ve (izin verilirse) **hava durumu**.
+- **Borç Tipleri** kartında canlı **tarih/saat** ve (izin verilirse) konum ile **hava durumu**.
+- Üst çubukta **bildirim merkezi**, sunucu/depolama rozeti (tıklayınca veritabanı özellikleri paneli), koyu/açık tema anahtarı ve çıkış düğmesi.
+- **Mobil uyumlu:** dikey ve yatay ekranlar için ayrı yerleşimler (kaydırmalı pencereler, ızgara düzenleri).
 - Rakamları tek tuşla **gizle / göster** (ekran paylaşımı için).
 
 ### 🧮 Kredi Yönetimi
+- **Borç tipine göre uyarlanan kayıt formu:** formun en üstünde *Borç Tipi* seçilir; etiketler, varsayılan KKDF/BSMV ve gösterilen alanlar tipe göre değişir. Zorunlu/geçersiz alan varsa kayıt engellenir ve uyarı verilir. Düzenlerken borç tipi değiştirilemez; ekran başlığı yeni kayıtta *Yeni Borç Ekle*, düzenlemede *"<borç adı>" Bilgilerini Düzenle* olur.
 - Net tutar, ek masraf, aylık faiz, **BSMV** ve **KKDF** ile **brüt faiz oranı, aylık taksit ve toplam geri ödeme** canlı önizleme.
 - Banka/kurum, ödeme günü, başlangıç tarihi, ödenen taksit sayısı ve not alanları.
 - **Detaylı ödeme planı:** taksit no, vade tarihi, taksit, faiz, anapara, kalan anapara; güncel ay işaretli ve otomatik kaydırılır.
 - **Taksit ödendi / geri al** tek tıkla.
 - **Kısmi ödeme:** henüz ödenmemiş bir taksite taksitten düşük bir tutar girilebilir; plan yeniden hesaplanır.
 - **Erken kapama analizi:** kalan anapara + işleyen faiz, varsa erken kapama indirimi.
-- Kayıt ayrıntıları penceresi, düzenleme ve silme (onaylı).
+- Kayıt ayrıntıları penceresi (Ödeme Planı, Düzenle, Sil, Grafik Göster, Kapat), düzenleme ve silme (onaylı). Ödeme planı, düzenleme ve grafik pencereleri ayrıntı penceresinin üstünde açılır; kapatınca ayrıntıya dönülür.
+- Ödeme planı tabloları, ayrıntı penceresi ve PDF çıktısı **borç tipine ve girilen verilere göre** düzenlenir.
+- **Teknik grafikler:** borç tipi dağılımı açıklamasından tip bazlı (taksit sayısı, taksit miktarı, aylık ödeme, yapılan ödeme) ve kayıt bazlı grafikler açılır.
 
 ### 🏷️ Borç Tipleri
-- Varsayılan tipler: İhtiyaç Kredisi, Konut Kredisi, Taşıt Kredisi, Kredi Kartı Taksidi, Senet / Elden Borç, Diğer.
-- Her tip için **ad, renk ve simge**; **sürükle-bırak** ile sıralama.
+Borç tipleri **kodla tanımlı ve sabittir**: ad değiştirilemez, tip silinemez veya yeni tip eklenemez. Yalnızca **sıra, renk ve simge** düzenlenebilir.
+
+| Tip | Varsayılan KKDF / BSMV | Forma özel alanlar |
+|---|---|---|
+| İhtiyaç Kredisi | %15 / %15 | BDDK vade/tutar sınırı kontrolü (engelleyici) |
+| Konut Kredisi | %0 / %15 | Konut/ekspertiz değeri, ilk konut (BSMV istisnası) |
+| Taşıt Kredisi | %15 / %15 | Araç türü (içten yanmalı / elektrikli), fatura değeri, BDDK vade ve kredi oranı kontrolü |
+| KOBİ Kredisi | %0 / %5 | Destek/teminat programı (KGF, KOSGEB, diğer), kredi amacı |
+| Tasarruf Finansmanı | faiz, KKDF, BSMV yok | [Tasarruf Finansmanı](#-tasarruf-finansmanı) bölümüne bakın |
+| Diğer | %0 / %0 | Faizsiz borçlarda toplam geri ödemeyi elle girme |
+
+- Sürükle-bırak (veya yukarı/aşağı düğmeleriyle) **sıralama**; sıra tüm ekranlara yansır.
 - **Otomatik simge kütüphanesi:** Font Awesome *Classic / Solid* simgeleri CSS'ten ayrıştırılıp veritabanına kaydedilir, sonraki açılışlarda yeniden indirilmez. Arama İngilizce simge adıyla yapılır (`house`, `car`, `bank`…).
-- Kayıt formundan çıkmadan yeni tip ekleme (form durumu korunur).
+- Eski sürümlerde/yedeklerde bulunan özel tipler açılışta `Diğer` tipine aktarılır; eski tip adı kaybolmasın diye kaydın notuna `[Eski borç tipi: …]` olarak eklenir.
+
+### 🐖 Tasarruf Finansmanı
+Faizsiz (katılım ilkeli) tasarruf finansmanı kayıtları için ayrı bir hesaplayıcı mantığı vardır:
+
+- **Girdiler:** varlık tipi (Konut / Araba), finansman modeli (Çekilişsiz / Çekilişli), finansman tutarı, peşinat, taksit (ay), aylık ödeme, isteğe bağlı **artışlı ödeme planı** (artış oranı ve periyodu), **hizmet bedeli** (% veya ₺; peşin ya da ilk 4 taksite bölünmüş).
+- **Aylık ödeme:** `(Finansman Tutarı − Peşinat) ÷ Taksit`; artışlı planda ilk dönem tutarı, toplamı finanse edilen tutara eşitleyecek şekilde bulunur. İstenirse elle değiştirilebilir.
+- **Tahmini teslimat (çekilişsiz):** sözleşme tutarının en az **%45**'i (peşinat + taksitler) birikmiş olmalı ve asgari taksit süresi dolmalıdır (süre peşinat oranında kısalır, en az 6 taksit). Çekilişli modelde teslimat çekiliş sonucuna bağlı gösterilir.
+- Sonuçlar, form doğrulaması geçtikten sonra hesaplama önizlemesinde görünür; ödeme planı tablosu ve PDF çıktısı bu veriye göre düzenlenir.
+
+> ⚠️ Bu hesaplar **tahmindir**; sözleşmenizdeki şartlar ve şirket uygulamaları farklı olabilir.
 
 ### 🔔 Bildirimler
 - Zil simgeli **bildirim merkezi**; ödeme günü ve bitişe yakın kredileri önem sırasına göre listeler.
 - Listede ve kartlarda renkli uyarı etiketleri; bitişe yakın kayıtlar yanıp söner. ([Ayrıntılar](#-uyarı-ve-bildirim-sistemi))
 
 ### 🎨 Kişiselleştirme
-- **Koyu / açık tema** (anahtar animasyonlu), tercih hatırlanır.
+- **Neumorphism UI teması (Themesberg Neumorphism UI v1.0.0)** — kabartma/çukur gölgeli arayüz; **koyu / açık mod** (anahtar animasyonlu, anında geçiş), tercih hatırlanır.
 - **14 vurgu rengi** (İndigo, Turuncu, Zümrüt, Pembe, Gökyüzü, Kehribar, Mor, Petrol, Kırmızı, Limon Yeşili, Mavi, Eflatun, Camgöbeği, Gül Kırmızısı).
 - **Arka plan baloncukları:** adet, boyut aralığı, hız, sürüklenme, opaklık, bulanıklık, parlama, karmaşıklık, çeşitlilik ve 6 renk; giriş ekranı ve panel için ayrı ayrı açılıp kapatılır.
 - Cam efekti ve animasyonları kapatma seçenekleri.
-- İsteğe bağlı **ödeme kutlaması:** taksit ödendiğinde havai fişek (süre ve hız ayarlı).
+- İsteğe bağlı **ödeme kutlaması:** *Taksit Ödeme Onayı*nda **"Evet, Onayla"** denince havai fişek (varsayılan kapalı; Görsellik Ayarları → Arayüz Efektleri'nden açılır, süre ve hız ayarlı).
 - Para birimi: **TRY ₺ / USD $ / EUR €**.
 
 ### 👤 Hesap ve Güvenlik
 - Giriş ekranı, çıkış, **güvenlik sorusuyla parola sıfırlama**.
-- Profil: ad soyad, kullanıcı adı, e-posta, parola, güvenlik sorusu/cevabı.
+- Profil: ad soyad, kullanıcı adı, e-posta, parola, güvenlik sorusu/cevabı (**Ayarlar → Hesap ve Güvenlik**).
+- Sayfa yenilenirken giriş penceresi görünmeden *"Sayfa yenileniyor..."* ekranı gösterilir.
+- Sağ tık menüsü kapalıdır; sağ tıklamada uyarı penceresi açılır.
 - Veriler tarayıcıda **AES-256-GCM** ile şifrelenerek saklanır.
 
 ## 🚀 Hızlı Başlangıç
@@ -117,7 +146,7 @@ set PORT=8080 && npm start
 | Parola | `admin123` |
 | Güvenlik sorusu | İlk okulunuzun adı nedir? → `Okul` |
 
-> ⚠️ Girişten hemen sonra **Ayarlar → Kullanıcı Profili ve Hesap Merkezi** bölümünden e-posta, parola ve güvenlik sorusunu değiştirin.
+> ⚠️ Girişten hemen sonra **Ayarlar → Hesap ve Güvenlik** bölümünden e-posta, parola ve güvenlik sorusunu değiştirin.
 
 ## 💾 Çalışma Modları ve Depolama
 
@@ -156,13 +185,13 @@ Her değişiklikte veri otomatik olarak yeniden şifrelenip kaydedilir (**otomat
 | Alan | Açıklama |
 |---|---|
 | Kayıt / Borç Adı | Örn. `180 Bin İhtiyaç Kredisi` |
-| Borç Tipi | Listeden seçin ya da formdan yeni tip ekleyin |
+| Borç Tipi | 6 sabit tipten birini seçin; form alanları tipe göre değişir (bkz. [Borç Tipleri](#️-borç-tipleri)) |
 | Banka / Kurum | İsteğe bağlı |
 | Çekilen Net Tutar | Hesabınıza geçen tutar |
 | Ek Masraf / Dosya M. | Tahsis, dosya masrafı vb. (anaparaya eklenir) |
 | Aylık Faiz Oranı (%) | Örn. `3.89` |
 | BSMV (%) / KKDF-Stopaj (%) | Varsayılan 15 / 15 (Tercihlerden değiştirilebilir) |
-| Taksit Sayısı | 1–120 |
+| Taksit Sayısı | 1–120 (tipe göre BDDK sınırı kontrol edilir) |
 | Toplam Geri Ödeme | Hesaplanır, **elle düzeltilebilir** (banka kesin tutarına göre) |
 | Erken Kapama İndirimi (%) | Bankanızın uyguladığı indirim varsa |
 | Ödenen Taksit | Mevcut krediyi sonradan giriyorsanız |
@@ -186,7 +215,7 @@ Kayıt ayrıntılarında ve ana ekrandaki **"Bugün Kapatılırsa"** kartında, 
 
 ### 4. Borç tipi yönetimi
 
-**Ayarlar → Tanımlamalar:** tip ekleme, düzenleme (ad/renk/simge), silme ve sürükle-bırak sıralama. Toplam ve kullanımdaki tip sayıları üstte gösterilir.
+**Ayarlar → Tercihler ve Tanımlamalar → Genel:** tiplerin sıralanması, rengi ve simgesi (*Borç Tipini Düzenle* penceresi; ad salt okunurdur). Toplam ve kullanımdaki tip sayıları üstte gösterilir.
 
 ### 5. Gizlilik modu
 
@@ -242,7 +271,7 @@ Faiz/anapara bilgisi yoksa: `kalan = toplam − (toplam/n × ödenen)` basit yö
 
 ## 🚦 Uyarı ve Bildirim Sistemi
 
-Uyarılar **Ayarlar → Tercihler**'deki eşiklere göre hesaplanır (`highlightDue` açıksa).
+Uyarılar **Ayarlar → Tercihler ve Tanımlamalar → Genel → Ödeme Uyarıları**'ndaki eşiklere göre hesaplanır (`highlightDue` açıksa; seçenekler yalnızca onay kutusu işaretliyken görünür). Yaklaşan gün sayısı kritik gün sayısından büyük olmalıdır.
 
 | Seviye | Koşul | Renk | Davranış |
 |---|---|---|---|
@@ -258,36 +287,37 @@ Uyarılar **Ayarlar → Tercihler**'deki eşiklere göre hesaplanır (`highlight
 
 ## ⚙️ Ayarlar Rehberi
 
-**Üst çubuk → Ayarlar** dört sekmeden oluşur:
+**MENÜ → Ayarlar** dört sekmeden oluşur. Her sekmenin altında **Uygula** (kaydet, pencere açık kalır) ve **Kaydet** (kaydet ve kapat) düğmeleri bulunur.
 
-### 1) Tanımlamalar
-Borç tiplerini ekleme/düzenleme/silme, renk, simge ve sıralama.
+### 1) Tercihler ve Tanımlamalar
+İki alt sekmesi vardır:
 
-### 2) Kullanıcı Profili ve Hesap Merkezi
-Avatar, ad ve e-posta özeti; altında:
-- **Profil Bilgileri** — ad soyad, kullanıcı adı
-- **Güvenlik ve Parola** — e-posta (giriş adı), yeni parola, güvenlik sorusu ve cevabı
-- **Tercihler** — aşağıdaki tablo
+**Genel**
+- **Borç Tipleri:** toplam/kullanımdaki tip sayısı, sıralama, renk ve simge düzenleme (tipler sabittir).
+- **Ödeme Uyarıları:** uyarı eşikleri (aşağıdaki tablo).
 
 | Tercih | Varsayılan | Açıklama |
 |---|---|---|
-| Para birimi | TRY | TRY / USD / EUR |
-| Varsayılan BSMV | 15 | Yeni kayıt formuna ön doldurulur |
-| Varsayılan KKDF | 15 | Yeni kayıt formuna ön doldurulur |
 | Ödeme uyarılarını vurgula | Açık | Tüm uyarıları aç/kapat |
-| Yaklaşan ödeme günü | 7 | "Yaklaşıyor" eşiği |
-| Kritik ödeme günü | 3 | "Kritik" eşiği |
-| Bitiş uyarısı (taksit) | 2 | Kaç taksit kala "bitiyor" denir |
-| Liste görünümü | Liste | Liste / Kart |
-| Satır başına kart | 4 | 4 / 5 / 6 |
+| Yaklaşan ödeme günü (sarı) | 7 | "Yaklaşıyor" eşiği (gün) |
+| Kritik ödeme günü (turuncu) | 3 | "Kritik" eşiği (gün) |
+| Ödeme bitimi yaklaşan (turuncu) | 2 | Kaç taksit kala "bitiyor" denir |
+| Son taksit ödemesi (yeşil) | 1 (sabit) | Değiştirilemez |
 
-### 3) Görsel Ayarlar
-- **Baloncuklar:** genel aç/kapa, giriş ekranı / panel için ayrı, adet (4–45), boyut (12–260), hız, sürüklenme, opaklık, bulanıklık, parlama, karmaşıklık, çeşitlilik, 6 renk.
-- **Arayüz:** vurgu rengi, cam efekti, animasyonlar, ödeme havai fişeği (süre 2–10, hız 1–10).
+Para birimi, varsayılan BSMV/KKDF, liste görünümü ve satır başına kart sayısı da `preferences` içinde saklanır; liste/kart seçimi ana ekrandaki liste başlığından yapılır.
+
+**Kredi Tercihleri** — *Kredi Vade Bilgileri*: İhtiyaç, Konut, Taşıt ve KOBİ kredileri için BDDK kararlarından ve vergi mevzuatından derlenmiş vade/tutar sınırları ile KKDF-BSMV oranları (**bilgilendirme amaçlıdır**; sınırlar dönemsel olarak değişir, güncel tablo için bankanıza danışın).
+
+### 2) Hesap ve Güvenlik
+Avatar, ad ve e-posta özeti; altında **Profil Bilgileri** (ad soyad, kullanıcı adı, e-posta), **Parola Değişimi** ve **Şifre Kurtarma Seçenekleri** (güvenlik sorusu ve cevabı).
+
+### 3) Görsellik Ayarları
+- **Baloncuk Efektleri:** genel aç/kapa, giriş ekranı / panel için ayrı, adet (4–45), boyut (12–260), hız, sürüklenme, opaklık, bulanıklık, parlama, karmaşıklık, çeşitlilik, 6 renk.
+- **Arayüz Efektleri:** vurgu rengi, cam efekti, animasyonlar, ödeme havai fişeği (süre 2–10, hız 1–10).
 - Tek tuşla varsayılana sıfırlama.
 
 ### 4) Veritabanı İşlemleri
-Veritabanı dosyası adı (`database.db` veya `Local Storage`), dosya boyutu, şifreleme algoritması bilgisi; **yedekle**, **yükle/geri yükle**, **bütünlük doğrula**, **sıfırla ve sil**.
+Veritabanı dosyası adı (`database.db` veya `Local Storage`), dosya boyutu, şifreleme algoritması bilgisi; **yedekle**, **yükle/geri yükle**, **bütünlük doğrula**, **sıfırla ve sil**. Aynı bilgi kutuları üst çubuktaki sunucu rozetine tıklayınca da açılır.
 
 ## 📦 Yedekleme ve Geri Yükleme
 
@@ -346,9 +376,9 @@ Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `
 
 ```
 .
-├── index.html        # Tüm arayüz (HTML + CSS) ve uygulama mantığı (JS) – ~11.4 bin satır
-├── server.js         # Express + node:sqlite katmanı (≈115 satır)
-├── package.json      # Betikler ve bağımlılıklar
+├── index.html        # Tüm arayüz (HTML + CSS) ve uygulama mantığı (JS) – ~13.6 bin satır
+├── server.js         # Express + node:sqlite katmanı (≈110 satır)
+├── package.json      # Betikler ve bağımlılıklar (lisans: Unlicense)
 ├── package-lock.json
 ├── database.db       # (otomatik oluşur) şifreli SQLite veritabanı  ← .gitignore'da
 ├── LICENSE           # Unlicense (kamu malı)
@@ -359,10 +389,11 @@ Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `
 
 | Katman | Teknoloji |
 |---|---|
-| Arayüz | Vanilla JS, HTML5, CSS (CSS değişkenleriyle tema) |
+| Arayüz | Vanilla JS, HTML5, CSS (CSS değişkenleriyle tema, Neumorphism UI uyarlaması) |
 | Grafik | [Chart.js](https://www.chartjs.org/) (CDN) |
+| PDF | [jsPDF](https://github.com/parallax/jsPDF) 2.5.1 (CDN); Türkçe karakterler için Roboto yazı tipi indirilir |
 | Simgeler | [Font Awesome 6.4](https://fontawesome.com/) (CDN) |
-| Yazı tipi | Inter (Google Fonts) |
+| Yazı tipi | Nunito Sans ve Inter (Google Fonts) |
 | Efekt | [fireworks-js](https://github.com/crashmax-dev/fireworks-js) (isteğe bağlı, dinamik import) |
 | Şifreleme | Web Crypto API (AES-GCM + PBKDF2) |
 | Sunucu | Node.js, Express 4, CORS |
@@ -384,7 +415,10 @@ Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `
 | Durum/depolama | `createInitialAppState`, `normalizeAppState`, `scanAndInitializeDataFile`, `autoSaveAllData`, `detectServerMode` |
 | Kimlik | `handleLogin`, `handleLogout`, `handleForgotPassword*` |
 | Veritabanı işlemleri | `handleDatabaseBackup`, `prepareDatabaseImport`, `applyDatabaseImport`, `deleteDatabase`, `verifyDatabaseIntegrity` |
-| Borç tipleri/simge | `renderDebtTypeList`, `moveDebtType`, `loadIconLibrary`, `renderIconPickerGrid` |
+| Borç tipleri/simge | `renderDebtTypeList`, `moveDebtType`, `loadIconLibrary`, `renderIconPickerGrid`, `getLoanTypeKey`, `LOAN_TYPE_CONFIG` |
+| Tasarruf finansmanı | `buildSavingsPlan`, `computeSavingsAutoMonthly`, `estimateSavingsDelivery`, `getSavingsDeliveryInfo` |
+| BDDK kontrolleri | `evaluateBddkLimits`, `buildCreditTermsHtml`, `validateLoanForm` |
+| PDF | `drawRecordCostChart`, `drawRecordTechCharts` (liste ve kayıt PDF'leri jsPDF ile çizilir) |
 | Kayıtlar | `handleAddOrEditRecord`, `incrementPaid`, `decrementPaid`, `setPartialPayment`, `renderPaymentPlanModal` |
 | Görünüm | `renderStats`, `renderChart`, `renderTypeCharts`, `renderCards`, `renderTable` |
 | Görsel ayarlar | `applyVisualSettings`, `renderAmbientBubbles`, `launchFireworks`, `applyAccentColor` |
@@ -406,7 +440,7 @@ Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `
     "username": ""
   },
   "debtTypes": [
-    { "name": "Konut Kredisi", "color": "#10b981", "icon": "house" }
+    { "name": "Konut Kredisi", "color": "#10b981", "icon": "house" }   // yalnızca 6 sabit tip
   ],
   "records": [
     {
@@ -429,6 +463,9 @@ Statik dosyalar proje klasöründen servis edilir (`express.static`); uygulama `
       "notes": "",
       "lastPaidMonth": "…",
       "finalPaymentMonth": "…"
+      // Tipe özel isteğe bağlı alanlar: konutValue, konutFirstHome (Konut) · vehicleType, vehicleValue (Taşıt)
+      // · kobiProgram, kobiPurpose (KOBİ) · downPayment, savAsset, savModel, savMonthly, savStepped,
+      //   savStepRate, savStepPeriod, savFeeValue, savFeeUnit, savFeeInst (Tasarruf Finansmanı)
     }
   ],
   "preferences":    { "currency": "TRY", "defaultBsmv": 15, "defaultKkdf": 15, "…": "…" },
@@ -456,7 +493,9 @@ Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsa
 |---|---|---|
 | `cdnjs.cloudflare.com` (Font Awesome) | Simgeler ve simge kütüphanesi | Simgeler görünmez |
 | `cdn.jsdelivr.net` (Chart.js) | Grafikler | Grafik çizilmez |
-| `fonts.googleapis.com` (Inter) | Yazı tipi | Sistem yazı tipi kullanılır |
+| `fonts.googleapis.com` (Nunito Sans, Inter) | Yazı tipi | Sistem yazı tipi kullanılır |
+| `cdnjs.cloudflare.com` (jsPDF) | PDF oluşturma | PDF indirilemez |
+| `cdn.jsdelivr.net` / `unpkg.com` (Roboto yazı tipi) | PDF'te Türkçe karakterler | PDF'te bazı karakterler sadeleştirilir |
 | `esm.run` (fireworks-js) | Ödeme havai fişeği (isteğe bağlı) | Efekt çalışmaz |
 | `api.open-meteo.com`, `api.bigdatacloud.net`, `ipwho.is` | Üst çubukta hava durumu ve konum | Hava durumu gösterilmez |
 | `avatars.githubusercontent.com` | Geliştirici profil kartı avatarı | Yedek simge gösterilir |
@@ -472,6 +511,7 @@ Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsa
 | Port kullanımda (`EADDRINUSE`) | `PORT=3001 npm start` ile farklı port seçin. |
 | Verilerim `file://` ile açınca görünmüyor | Yerel mod, sunucu modu verisini görmez. Yedek alıp yükleyin. |
 | Tarayıcıyı değiştirince veri yok | Local Storage tarayıcıya özeldir; sunucu modunu kullanın veya yedek taşıyın. |
+| PDF indirilmiyor | jsPDF CDN'ine ulaşılamıyor olabilir; internet bağlantısını kontrol edin. |
 | Simge listesi boş / simgeler yok | Font Awesome CDN'ine ulaşılamıyor. İnterneti kontrol edin; Tanımlamalar'da simge kütüphanesi yeniden denenir. |
 | Grafikler görünmüyor | Chart.js CDN'i engellenmiş olabilir (reklam/güvenlik eklentisi, çevrimdışı). |
 | Parolamı unuttum | Giriş ekranında **Şifremi Unuttum?** → e-posta → güvenlik cevabı → yeni parola. |
@@ -489,13 +529,6 @@ Arayüz aşağıdaki dış kaynaklara bağlanır. **Çevrimdışı çalışırsa
 - **Veri biçimi değişikliği:** eski yedeklerin açılabilmesi için `normalizeAppState()` içine **göç (migration)** kuralı yazın.
 - **Para birimi eklemek:** `CURRENCY_OPTIONS` nesnesine sembol ve ad ekleyin.
 
-### Bilinen küçük tutarsızlıklar (temizlik önerileri)
-- `package.json` içinde **`undici`** bağımlılığı var ama `server.js` kullanmıyor; kaldırılabilir.
-- `package.json` → `"main": "index.html"`; çalıştırılabilir giriş noktası `server.js`'tir.
-- `.gitignore` içindeki `/node_modules/node_modules` satırı muhtemelen `node_modules/` olmalıdır; ayrıca kökte uzantısız bir `gitignore` dosyası bulunuyor.
-- `package.json` lisansı `ISC`, `LICENSE` dosyası ise Unlicense (kamu malı) — birini diğerine uyumlu hâle getirin.
-- Depoya `node_modules/` ve içinde veri bulunan `database.db` dahil edilmemelidir.
-
 ### Katkı
 Hata bildirimi ve öneriler için issue açabilir, değişiklikler için pull request gönderebilirsiniz. Büyük değişikliklerde önce bir issue ile tartışmanız önerilir. Bu araç yalnızca takip ve bilgilendirme amaçlıdır; finansal tavsiye değildir.
 
@@ -504,7 +537,7 @@ Hata bildirimi ve öneriler için issue açabilir, değişiklikler için pull re
 Bu proje [Unlicense](https://unlicense.org/) ile kamu malı olarak sunulmuştur; dilediğiniz gibi kullanabilir, değiştirebilir ve dağıtabilirsiniz. Ayrıntılar için [`LICENSE`](LICENSE) dosyasına bakın.
 
 ## 🕰️ Son Güncelleme
-09 Ekim 2026
+13 Ekim 2026
 
 ---
 

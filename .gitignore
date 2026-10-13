@@ -1,3 +1,5 @@
-/node_modules
+node_modules/
 database.db
 database.db-*
+database.json
+database-yedek*.json

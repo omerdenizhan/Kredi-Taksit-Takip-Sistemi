@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const { DatabaseSync } = require('node:sqlite');
-
 const PORT = process.env.PORT || 3000;
 const DB_PATH = path.join(__dirname, 'database.db');
 const LEGACY_JSON_PATH = path.join(__dirname, 'database.json');
@@ -12,7 +11,6 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
-// Veritabanı ve sunucu dosyaları tarayıcıdan doğrudan indirilemesin
 app.use((req, res, next) => {
     const name = path.basename(decodeURIComponent(req.path)).toLowerCase();
     if (/^database\.(db|json)(-wal|-shm|-journal)?$/.test(name) || name === 'server.js') {
@@ -20,11 +18,9 @@ app.use((req, res, next) => {
     }
     next();
 });
+
 app.use(express.static(__dirname));
 
-// ---- SQLite veritabanı ---------------------------------------------------
-// Veri tarayıcıda AES-256-GCM ile şifrelenir; sunucu yalnızca şifreli
-// paketi (salt, iv, data) saklar ve içeriğini hiçbir zaman göremez.
 const db = new DatabaseSync(DB_PATH);
 db.exec(`
     CREATE TABLE IF NOT EXISTS app_data (
@@ -42,6 +38,7 @@ const upsertStmt = db.prepare(`
     ON CONFLICT(id) DO UPDATE SET salt = excluded.salt, iv = excluded.iv,
                                   data = excluded.data, updated_at = excluded.updated_at
 `);
+
 const deleteStmt = db.prepare('DELETE FROM app_data WHERE id = 1');
 
 function isByteArray(value) {
@@ -62,7 +59,6 @@ function savePayload(payload) {
     return true;
 }
 
-// Eski database.json varsa ve database.db boşsa şifreli veriyi bir kez aktar
 if (!selectStmt.get() && fs.existsSync(LEGACY_JSON_PATH)) {
     try {
         const legacy = JSON.parse(fs.readFileSync(LEGACY_JSON_PATH, 'utf8'));
@@ -74,7 +70,6 @@ if (!selectStmt.get() && fs.existsSync(LEGACY_JSON_PATH)) {
     }
 }
 
-// ---- API -------------------------------------------------------------------
 app.get('/api/database', (req, res) => {
     const row = selectStmt.get();
     if (!row) return res.status(404).send('Veritabanı boş.');
