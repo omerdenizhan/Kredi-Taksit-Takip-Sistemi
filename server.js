@@ -6,11 +6,9 @@ const { DatabaseSync } = require('node:sqlite');
 const PORT = process.env.PORT || 3000;
 const DB_PATH = path.join(__dirname, 'database.db');
 const LEGACY_JSON_PATH = path.join(__dirname, 'database.json');
-
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
-
 app.use((req, res, next) => {
     const name = path.basename(decodeURIComponent(req.path)).toLowerCase();
     if (/^database\.(db|json)(-wal|-shm|-journal)?$/.test(name) || name === 'server.js') {
@@ -18,34 +16,27 @@ app.use((req, res, next) => {
     }
     next();
 });
-
 app.use(express.static(__dirname));
-
 const db = new DatabaseSync(DB_PATH);
 db.exec(`
     CREATE TABLE IF NOT EXISTS app_data (
-        id         INTEGER PRIMARY KEY CHECK (id = 1),
-        salt       BLOB NOT NULL,
-        iv         BLOB NOT NULL,
-        data       BLOB NOT NULL,
+        id INTEGER PRIMARY KEY CHECK (id = 1),
+        salt BLOB NOT NULL,
+        iv BLOB NOT NULL,
+        data BLOB NOT NULL,
         updated_at TEXT NOT NULL
     )
 `);
-
 const selectStmt = db.prepare('SELECT salt, iv, data FROM app_data WHERE id = 1');
 const upsertStmt = db.prepare(`
     INSERT INTO app_data (id, salt, iv, data, updated_at) VALUES (1, ?, ?, ?, ?)
-    ON CONFLICT(id) DO UPDATE SET salt = excluded.salt, iv = excluded.iv,
-                                  data = excluded.data, updated_at = excluded.updated_at
+    ON CONFLICT(id) DO UPDATE SET salt = excluded.salt, iv = excluded.iv, data = excluded.data, updated_at = excluded.updated_at
 `);
-
 const deleteStmt = db.prepare('DELETE FROM app_data WHERE id = 1');
-
 function isByteArray(value) {
     return Array.isArray(value) && value.length > 0 &&
         value.every(n => Number.isInteger(n) && n >= 0 && n <= 255);
 }
-
 function savePayload(payload) {
     if (!payload || !isByteArray(payload.salt) || !isByteArray(payload.iv) || !isByteArray(payload.data)) {
         return false;
@@ -58,7 +49,6 @@ function savePayload(payload) {
     );
     return true;
 }
-
 if (!selectStmt.get() && fs.existsSync(LEGACY_JSON_PATH)) {
     try {
         const legacy = JSON.parse(fs.readFileSync(LEGACY_JSON_PATH, 'utf8'));
@@ -69,7 +59,6 @@ if (!selectStmt.get() && fs.existsSync(LEGACY_JSON_PATH)) {
         console.warn('database.json aktarılamadı:', err.message);
     }
 }
-
 app.get('/api/database', (req, res) => {
     const row = selectStmt.get();
     if (!row) return res.status(404).send('Veritabanı boş.');
@@ -80,14 +69,12 @@ app.get('/api/database', (req, res) => {
         data: Array.from(row.data)
     });
 });
-
 app.get('/api/database/info', (req, res) => {
     let size = 0;
     try { size = fs.statSync(DB_PATH).size; } catch (err) { size = 0; }
     res.set('Cache-Control', 'no-store');
     res.json({ fileName: path.basename(DB_PATH), size });
 });
-
 app.post('/api/save', (req, res) => {
     try {
         if (!savePayload(req.body)) return res.status(400).send('Geçersiz şifreli veri.');
@@ -97,7 +84,6 @@ app.post('/api/save', (req, res) => {
         res.status(500).send('Hata');
     }
 });
-
 app.delete('/api/database', (req, res) => {
     try {
         deleteStmt.run();
@@ -107,5 +93,4 @@ app.delete('/api/database', (req, res) => {
         res.status(500).send('Hata');
     }
 });
-
 app.listen(PORT, () => console.log(`Sunucu çalışıyor: (Veritabanı: database.db) http://localhost:${PORT}`));
