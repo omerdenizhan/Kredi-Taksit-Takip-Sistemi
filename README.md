@@ -541,7 +541,7 @@ Hata bildirimi ve öneriler için issue açabilir, değişiklikler için pull re
 Bu proje [Unlicense](https://unlicense.org/) ile kamu malı olarak sunulmuştur; dilediğiniz gibi kullanabilir, değiştirebilir ve dağıtabilirsiniz. Ayrıntılar için [`LICENSE`](LICENSE) dosyasına bakın.
 
 ## 🕰️ Son Güncelleme
-22 Ekim 2026
+28 Ekim 2026
 
 ---
 
